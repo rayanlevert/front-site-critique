@@ -5,6 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 import { Link, Route, Switch } from 'react-router-dom';
 import Article from './pages/Article';
 import Home from './pages/Home';
+import User from './components/users';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
             <LinkContainer to="/article">
               <Nav.Link>Article test</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/users">
+              <Nav.Link>Administration</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -30,6 +34,9 @@ function App() {
           </Route>
           <Route path="/article">
             <Article />
+          </Route>
+          <Route path="/users">
+            <User></User>
           </Route>
         </Switch>
       </div>

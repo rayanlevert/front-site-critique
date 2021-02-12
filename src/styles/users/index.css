@@ -1,0 +1,13 @@
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.containerListUsers {
+    text-align: left;
+    margin-top: 10px;
+    padding-left: 15rem !important;
+}
