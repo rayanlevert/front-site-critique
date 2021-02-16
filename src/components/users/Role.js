@@ -12,7 +12,7 @@ export default function Role( { roles }) {
 
     return (
         <>
-            { roles.map((role, index) => <div key={index}><em>{roleToString(role.name)}</em><br /></div>)}
+            { roles !== undefined && roles.map((role, index) => <div key={index}><em>{roleToString(role.name)}</em><br /></div>)}
         </>
     );
 }

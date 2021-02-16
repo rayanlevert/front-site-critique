@@ -1,4 +1,4 @@
-import { createStore } from "redux";
-import reducerUser from "./reducers/reducerUser";
+import { combineReducers, createStore } from "redux";
+import reducers from "./reducers";
 
-export default createStore(reducerUser);
+export default createStore(reducers);

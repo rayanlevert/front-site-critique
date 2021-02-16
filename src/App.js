@@ -1,13 +1,17 @@
-import logo from './logo.svg';
+import { Nav, Navbar } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
-import { Link, Route, Switch } from 'react-router-dom';
+import LoginOrLogout from './components/authentification/loginOrLogout';
+import Login from './components/login';
+import Logout from './components/logout';
+import User from './components/users';
+import { ProfileUser } from './components/users/profileUser';
 import Article from './pages/Article';
 import Home from './pages/Home';
-import User from './components/users';
 
 function App() {
+
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -15,32 +19,41 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-          <LinkContainer to="/">
+            <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/article">
-              <Nav.Link>Article test</Nav.Link>
+            <LinkContainer to="/article/game">
+              <Nav.Link className="navItem">Jeux-vidéo</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/users">
               <Nav.Link>Administration</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
+        <LoginOrLogout></LoginOrLogout>
       </Navbar>
       <div className="container-fluid p-0">
         <Switch>
           <Route exact path="/">
-            <Home  />
+            <Home />
           </Route>
           <Route path="/article">
             <Article />
           </Route>
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <Route path="/logout">
+            <Logout></Logout>
+          </Route>
           <Route path="/users">
             <User></User>
           </Route>
+          <Route exact path="/profile/:id" component={ProfileUser}></Route>
+          <Route path="/create-review" component={CreateReview}></Route>
+          <Route path="/update-review/:id" component={UpdateReview}></Route>
         </Switch>
       </div>
-
     </div>
   );
 }

@@ -8,20 +8,30 @@ export default function AddUser() {
 
     const handleOpen = () => isOpen(true);
     const handleClose = () => isOpen(false);
-
-    const user = useSelector(state => state);
-
+    
+    const user = useSelector(state => state.user);
+    console.log(useSelector(state => state));
+    
     const handleSubmit = () => {
-        fetch('http://localhost:8080/api/users/register', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then(res => alert("L'utilisateur a été créé"))
-            .catch(err => alert("erreur"))
+        if (user.lastname !== "" && user.firstname !== "" && user.email !== "" && user.password !== "" && user.username !== "") {
+            fetch('http://localhost:8080/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(body => body.json().then(response => {
+                    alert(response.message);
+                    if (response.status === "OK") {
+                        handleClose();
+                    }
+                }))
+                .catch(error => console.log(error))
+        } else {
+            alert("Veuillez renseigner tous les champs.");
+        }
     }
 
     return (
