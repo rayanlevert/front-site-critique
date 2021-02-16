@@ -9,6 +9,10 @@ import User from './components/users';
 import { ProfileUser } from './components/users/profileUser';
 import Article from './pages/Article';
 import Home from './pages/Home';
+import CreateReview from './components/review/CreateReview';
+import UpdateReview from './components/review/UpdateReview';
+import Game from './components/Game/Game';
+
 
 function App() {
 
@@ -37,8 +41,11 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/article">
+          <Route exact path="/article/:genre">
             <Article />
+          </Route>
+          <Route path="/article/game/:id">
+            <Game />
           </Route>
           <Route path="/login">
             <Login></Login>
