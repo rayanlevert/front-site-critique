@@ -8,9 +8,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #ededed !important;
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.color-navbar {
+  background-color: #e3e3e3;
+}
+
+.navItem {
+  color: #8e0002 !important;
+}
+.navItem:hover {
+  opacity: 75% !important;
+}
+
+.list{
+  padding-left:0px;
 }
