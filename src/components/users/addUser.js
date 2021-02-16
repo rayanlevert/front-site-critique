@@ -8,9 +8,10 @@ export default function AddUser() {
 
     const handleOpen = () => isOpen(true);
     const handleClose = () => isOpen(false);
-
-    const user = useSelector(state => state);
-
+    
+    const user = useSelector(state => state.user);
+    console.log(useSelector(state => state));
+    
     const handleSubmit = () => {
         if (user.lastname !== "" && user.firstname !== "" && user.email !== "" && user.password !== "" && user.username !== "") {
             fetch('http://localhost:8080/api/users/register', {

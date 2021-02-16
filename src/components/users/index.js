@@ -1,12 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Component } from "react";
 import { faBan, faCheck, faCoffee, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons'
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import Role from "./Role";
 import "../../styles/users/index.css";
 import AddUser from "./addUser";
+import { LinkContainer } from "react-router-bootstrap";
+import { Link, Route, Switch } from "react-router-dom";
+import { ProfileUser } from "./profileUser";
+import { withRouter } from"react-router-dom"; 
 
-export default class User extends Component {
+class User extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +21,10 @@ export default class User extends Component {
         const response = await fetch('http://localhost:8080/api/users/getAll');
         const users = await response.json();
         this.setState({ users });
-        console.log(users[0].roles[0].name);
+    }
+
+    profileOnClick(id) {
+        this.props.history.push(`/profile/${id}`);
     }
 
     render() {
@@ -42,7 +49,7 @@ export default class User extends Component {
                                     {this.state.users.map(user =>
                                         <tr key={user.id}>
                                             <td>
-                                                &bull; {user.lastname.toUpperCase() + ' ' + user.firstname}<br />
+                                                <Link onClick={() => this.profileOnClick(user.id)}>{user.lastname.toUpperCase() + ' ' + user.firstname}<br /></Link>
                                                 <Role roles={user.roles}></Role>
                                                 login : <em>{user.username}</em>
                                             </td>
@@ -59,3 +66,5 @@ export default class User extends Component {
         );
     }
 }
+
+export default withRouter(User);
