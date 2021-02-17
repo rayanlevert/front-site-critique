@@ -1,14 +1,6 @@
-export default function Role( { roles }) {
+import roleToString from "../Role/roleToString";
 
-    function roleToString(roleName) {
-        switch (roleName) {
-            case "ROLE_ADMIN":
-                return "Administrateur";
-            
-            case "ROLE_USER":
-                return "Utilisateur";
-        }
-    }
+export default function Role( { roles, role }) {
 
     return (
         <>

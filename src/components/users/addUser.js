@@ -10,9 +10,9 @@ export default function AddUser() {
     const handleClose = () => isOpen(false);
     
     const user = useSelector(state => state.user);
-    console.log(useSelector(state => state));
     
     const handleSubmit = () => {
+        console.log(user);
         if (user.lastname !== "" && user.firstname !== "" && user.email !== "" && user.password !== "" && user.username !== "") {
             fetch('http://localhost:8080/api/users/register', {
                 method: 'POST',
@@ -40,7 +40,7 @@ export default function AddUser() {
                 Créer un utilisateur
             </Button>
 
-            <Modal show={open} onHide={handleClose}>
+            <Modal show={open} onHide={handleClose}  size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>Créer un utilisateur</Modal.Title>
                 </Modal.Header>

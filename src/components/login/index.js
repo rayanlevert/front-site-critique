@@ -1,17 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Alert, Button, Form, ResponsiveEmbed } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { login } from "../../redux/actions/actionCreatorUserAuth";
 import { Dot } from 'react-animated-dots';
 
 function Login({ login }) {
-    const [userAuth, setUserauth] = useState({ username: '', password: '', isLogged: false, userId: 0 });
+    const [userAuth, setUserauth] = useState({ username: '', password: '', isLogged: false, userId: 0, roles: [] });
     const [redirect, setRedirect] = useState(false);
     const [visible, setVisible] = useState(false);
     const [variant, setVariant] = useState("error");
     const dots = '<Dot>.</Dot><Dot>.</Dot><Dot>.</Dot>';
-    
+
+    useEffect(() => {
+        if (userAuth.userId !== 0) {
+            login(userAuth);
+        }
+    }, [userAuth])
+
     const onChange = (e) => {
         let id = e.target.id;
         setUserauth({ ...userAuth, [e.target.id]: e.target.value });
@@ -44,8 +50,8 @@ function Login({ login }) {
                     if (response.status === "OK") {
                         const message = "Bon retour parmi nous " + response.subObject.firstname + "!" + "\nVous allez être redirigé vers la page d'accueil...";
                         displayAlert(e, "success", message);
-                        login(userAuth);
-                        console.log(userAuth);
+                        setUserauth({ ...userAuth, userId: response.subObject.id, roles: response.subObject.roles })
+
                     } else {
                         displayAlert(e, "danger", response.message);
                     }
@@ -59,9 +65,7 @@ function Login({ login }) {
             <h2>Bienvenue sur la page de connexion!</h2>
 
             <h3>Connectez-vous:</h3>
-            
-            
-        
+
             <div>
                 <Alert id="alert" variant={variant} show={visible}></Alert>
             </div>
@@ -81,6 +85,12 @@ function Login({ login }) {
 
                 {redirect && <Redirect to="/home"></Redirect>}
             </Form>
+
+            <div>
+                <small>Pas encore de compte? Créez le vôtre dès maintenant!</small><br />
+                <Link>Inscrivez-vous!</Link>
+            </div>
+
         </>
     )
 }

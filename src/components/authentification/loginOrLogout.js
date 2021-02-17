@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useSelector } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap";
 
 export default function LoginOrLogout() {
-    const userAuth = useSelector(state => state.userAuth);
-
-    return (
+    const user = useSelector(state => state.userAuth);
+    
+    return (    
         <>
             {
-                !userAuth.isLogged ? (
+                !user.isLogged ? (
                     <LinkContainer to="/login">
                         <Nav.Link>Se connecter</Nav.Link>
                     </LinkContainer>
@@ -22,3 +23,4 @@ export default function LoginOrLogout() {
         </>
     )
 }
+

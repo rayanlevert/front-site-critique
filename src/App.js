@@ -9,6 +9,9 @@ import User from './components/users';
 import { ProfileUser } from './components/users/profileUser';
 import Article from './pages/Article';
 import Home from './pages/Home';
+import CreateReview from './components/review/CreateReview';
+import UpdateReview from './components/review/UpdateReview';
+import Game from './components/Game/Game';
 
 function App() {
 
