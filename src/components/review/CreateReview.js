@@ -14,7 +14,7 @@ class CreateReview extends Component {
             publishDate: '',
             user: { id: 3}, 
             article:{ id: this.props.location.state.articleId },
-            path: '/' + genre + '/' + idArticle
+            path: 'article/' + genre + '/' + idArticle
         }
         this.changeTitleReviewHandle = this.changeTitleReviewHandle.bind(this);
         this.changeContentReviewHandle = this.changeContentReviewHandle.bind(this);

@@ -12,6 +12,10 @@ import Home from './pages/Home';
 import CreateReview from './components/review/CreateReview';
 import UpdateReview from './components/review/UpdateReview';
 import Game from './components/Game/Game';
+<<<<<<< HEAD
+=======
+
+>>>>>>> d0aed9f8fc043b01104fb5effd380238aa9c506e
 
 function App() {
 
@@ -40,8 +44,11 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/article">
+          <Route exact path="/article/:genre">
             <Article />
+          </Route>
+          <Route path="/article/game/:id">
+            <Game />
           </Route>
           <Route path="/login">
             <Login></Login>

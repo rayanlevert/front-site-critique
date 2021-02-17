@@ -4,22 +4,35 @@ import { FormattedDate } from '../Date/FormattedDate';
 import Review from '../review/Review';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { withRouter,useParams  } from 'react-router-dom';
+import { withRouter,useParams, Redirect  } from 'react-router-dom';
 
 class Game extends Component {
     constructor(props) {
         super(props);
-        this.state = { games: [] };
+        this.state = { games: [], redirectError: false };
         this.createdReview = this.createdReview.bind(this);
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         console.log('GAME');
-        const response = await fetch('http://localhost:8080/api/game/' + this.props.match.params.id);
-        const games = await response.json();
-        this.setState({ games });
-        console.log(games); 
+
+        const URL_GET_GAME = 'http://localhost:8080/api/game/' + this.props.match.params.id;
+        fetch(URL_GET_GAME)
+        .then(async response => {
+            const data = await response.json();
+            if (!response.ok) {
+
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
+            this.setState({ games: data })
+        })
+        .catch(error => {
+            this.setState({ redirectError: true });
+            this.props.history.goBack()
+        });
     }
+
 
     createdReview(){
         this.props.history.push({
@@ -68,6 +81,7 @@ class Game extends Component {
                 </Card>
                 </Col>
                 </Row>
+
             </>
         );
     }
