@@ -8,7 +8,6 @@ function FormUser({ add }) {
     const ROLES = ["ROLE_ADMIN"];
 
     const [user, setUser] = useState({ lastname: '', firstname: '', password: '', email: '', username: '', roles: [] });
-    const [role, setRole] = useState([]);
 
     useEffect(() => {
         add(user);
@@ -21,22 +20,17 @@ function FormUser({ add }) {
     const onChange = (e) => {
         let id = e.target.id;
         setUser({ ...user, [e.target.id]: e.target.value });
-        console.log(user);
     }
 
     const onChangeRoles = (e) => {
         let object;
         const array = [];
         if(e.target.checked) {
-            console.log("ajout");
             object = {"name": e.target.id}
             array.push(object);
-
         } else {
-            console.log("retire");
             const index = array.indexOf(object);
             array.splice(index, 1);
-            console.log("oui",array);
         }
         setUser({...user, roles: array});
     }

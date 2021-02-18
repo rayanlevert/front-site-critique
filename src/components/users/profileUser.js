@@ -1,6 +1,9 @@
+import { faAd, faBan, faExclamation, faExclamationTriangle, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row, Modal, Button, Alert } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Redirect, useParams } from "react-router-dom";
 import "../../styles/users/index.css";
 import FormUser from "./FormUser";
 import Role from "./Role";
@@ -8,24 +11,37 @@ import Role from "./Role";
 export function ProfileUser() {
     const { id } = useParams();
     const [user, setUser] = useState({});
-    const [open, isOpen] = useState(false);
+    const userAuth = useSelector(state => state.userAuth);
+
+    const [openPassword, isOpenPassword] = useState(false);
     const [password, setPassword] = useState({ rawPassword: '', encodedPassword: '' });
+
+    const [openDelete, isOpenDelete] = useState(false);
     const [visible, setVisible] = useState(false);
+    const [visibleDeleted, setVisibleDeleted] = useState(false);
     const [verif, setVerif] = useState(false);
 
-    const handleOpen = () => {
-        if (!verif) isOpen(true);
-    }
+    const [variant, setVariant] = useState("danger");
+    const [redirect, setRedirect] = useState(false);
 
-    const handleClose = () => isOpen(false);
+    const handleOpenPassword = () => {
+        if (!verif) isOpenPassword(true);
+    }
+    const handleClosePassword = () => isOpenPassword(false);
+
+    const handleCloseDelete = () => isOpenDelete(false);
+    const handleOpenDelete = () => isOpenDelete(true);
+
 
     useEffect(() => {
+        if (userAuth.userId !== user.id || !userAuth.roles.includes("ROLE_ADMIN")) {
+            <Redirect to="/home"></Redirect>
+        }
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => {
                 response.json().then(user => {
                     setUser(user);
                     setPassword({ ...password, encodedPassword: user.password })
-                    console.log(user);
                 })
             });
     }, []);
@@ -33,10 +49,23 @@ export function ProfileUser() {
     const onChange = (e) => {
         let id = e.target.id;
         setUser({ ...user, [e.target.id]: e.target.value });
+        <Redirect to='/home'></Redirect>
 
         if (id === "passwordVerif") {
-            console.log(e.target.value);
             setUser({ ...user, password: e.target.value })
+        }
+    }
+
+    const displayAlert = (variant, message) => {
+        setVariant(variant);
+        setVisibleDeleted(true);
+        let alertDeleted = document.getElementById('alertDeleted');
+        alertDeleted.textContent = message;
+
+        if (variant == 'success') {
+            setTimeout(() => {
+                setRedirect(true);
+            }, 1500);
         }
     }
 
@@ -50,23 +79,31 @@ export function ProfileUser() {
                 setVerif(true);
                 setVisible(false);
                 setUser({ ...user, password: password.rawPassword })
-                handleClose();
+                handleClosePassword();
             } else setVisible(true);
         })
     }
-
-
 
     const onChangePasswordVerif = (e) => {
         setPassword({ ...password, rawPassword: e.target.value });
     }
 
-    const handleSubmit = () => {
+    const handleSubmitSave = () => {
         fetch("http://localhost:8080/api/users/update", {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         }).then(response => console.log(response));
+    }
+
+    const handleSubmitDelete = () => {
+        fetch(`http://localhost:8080/api/users/delete/${id}`, {
+            method: 'DELETE'
+        }).then(response => response.json().then(response => {
+            if (response.status === "OK") {
+                displayAlert("success", response.message);
+            } else displayAlert("danger", response.message);
+        }))
     }
 
     return (
@@ -108,7 +145,7 @@ export function ProfileUser() {
 
                             <Form.Group controlId="passwordVerif">
                                 <Form.Label>Mot de passe</Form.Label>
-                                <Form.Control type="password" value={user.password} onClick={handleOpen} onChange={onChange} required />
+                                <Form.Control type="password" value={user.password} onClick={handleOpenPassword} onChange={onChange} required />
                             </Form.Group>
                         </Form>
                     </Col>
@@ -120,13 +157,14 @@ export function ProfileUser() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col sm={12}>
-                        <Button variant="primary" size="sm" onClick={handleSubmit}>Sauvegarder</Button>
+                    <Col sm={6}>
+                        <Button variant="primary" size="sm" onClick={handleSubmitSave}><FontAwesomeIcon icon={faSave}></FontAwesomeIcon> Sauvegarder</Button> &nbsp;
+                        <Button variant="danger" size="sm" onClick={handleOpenDelete}><FontAwesomeIcon icon={faBan}></FontAwesomeIcon> Effacer le profil</Button>
                     </Col>
                 </Row>
             </Container>
 
-            <Modal show={open} onHide={handleClose} size="lg">
+            <Modal show={openPassword} onHide={handleClosePassword} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmer votre ancien mot de passe avant de le modifier</Modal.Title>
                 </Modal.Header>
@@ -142,10 +180,31 @@ export function ProfileUser() {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Fermer</Button>
+                    <Button variant="secondary" onClick={handleClosePassword}>Fermer</Button>
                     <Button variant="primary" onClick={handleSubmitPasswordVerif}>Appliquer</Button>
                 </Modal.Footer>
             </Modal>
+
+            <Modal show={openDelete} onHide={handleCloseDelete} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <p><FontAwesomeIcon icon={faExclamationTriangle}></FontAwesomeIcon> Etes vous sur de vouloir supprimer ce compte?<br />
+                            <small>Attention, cette action est irréversible.</small>
+                        </p>
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Alert variant={variant} id="alertDeleted" show={visibleDeleted}></Alert>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDelete}>Fermer</Button>
+                    <Button variant="danger" onClick={handleSubmitDelete}>Supprimer</Button>
+                </Modal.Footer>
+            </Modal>
+
+            { redirect && <Redirect to="/home"></Redirect>}
         </>
     )
 

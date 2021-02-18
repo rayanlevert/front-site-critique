@@ -24,7 +24,7 @@ function User({ history }) {
                     setUsers(users);
                 })
             })
-    }, []);
+    }, [users]);
 
     const profileOnClick = (id) => {
         history.push(`/profile/${id}`);

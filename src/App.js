@@ -1,4 +1,4 @@
-import { Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
@@ -12,10 +12,10 @@ import Home from './pages/Home';
 import CreateReview from './components/review/CreateReview';
 import UpdateReview from './components/review/UpdateReview';
 import Game from './components/Game/Game';
-<<<<<<< HEAD
-=======
-
->>>>>>> d0aed9f8fc043b01104fb5effd380238aa9c506e
+import SignIn from './components/authentification/signin';
+import ProtectedAdminRoute from './components/authentification/ProtectedAdminRoute';
+import Administration from './components/authentification/Administration';
+import ProtectedProfileRoute from './components/users/ProtectedProfile';
 
 function App() {
 
@@ -32,13 +32,12 @@ function App() {
             <LinkContainer to="/article/game">
               <Nav.Link className="navItem">Jeux-vidéo</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/users">
-              <Nav.Link>Administration</Nav.Link>
-            </LinkContainer>
+            <Administration></Administration>
           </Nav>
+          <LoginOrLogout></LoginOrLogout>
         </Navbar.Collapse>
-        <LoginOrLogout></LoginOrLogout>
       </Navbar>
+
       <div className="container-fluid p-0">
         <Switch>
           <Route exact path="/">
@@ -56,10 +55,13 @@ function App() {
           <Route path="/logout">
             <Logout></Logout>
           </Route>
-          <Route path="/users">
-            <User></User>
+          <Route path="/signin">
+            <SignIn></SignIn>
           </Route>
-          <Route exact path="/profile/:id" component={ProfileUser}></Route>
+          <ProtectedAdminRoute exact path="/admin/users" redirectTo="/home">
+            <User></User>
+          </ProtectedAdminRoute>
+          <ProtectedProfileRoute exact path="/profile/:id" component={ProfileUser}></ProtectedProfileRoute>
           <Route path="/create-review" component={CreateReview}></Route>
           <Route path="/update-review/:id" component={UpdateReview}></Route>
         </Switch>

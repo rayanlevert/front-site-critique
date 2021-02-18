@@ -21,6 +21,10 @@
     padding-left: 3%;
 }
 
+.formSignin {
+    padding-left: 15%;
+}
+
 hr.solid {
     border-top: 2px solid #bbb;
 }

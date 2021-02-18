@@ -88,7 +88,7 @@ function Login({ login }) {
 
             <div>
                 <small>Pas encore de compte? Créez le vôtre dès maintenant!</small><br />
-                <Link>Inscrivez-vous!</Link>
+                <Link to="/signin">Inscrivez-vous!</Link>
             </div>
 
         </>
