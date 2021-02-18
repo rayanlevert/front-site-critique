@@ -19,7 +19,7 @@ class UpdateReview extends Component {
     }
 
     async componentDidMount(){
-        console.log('creation review');
+        console.log('affichage review');
         const URL_DELETE_REVIEW = "http://localhost:8080/api/reviews/review/" + this.state.id;
         const response = await fetch(URL_DELETE_REVIEW);
         const reviews = await response.json();
@@ -30,26 +30,39 @@ class UpdateReview extends Component {
             publishDate: reviews.publishDate,
             user: { id: reviews.userId},
             article: { id: reviews.articleId}
-        });     
+        });
+        const userOnline = JSON.parse(localStorage.getItem('user'));
+        this.setState({userOnline});
+        console.log(this.state);
     }
 
     updateReview = (e) => {
-        const URL_UPDATE_REVIEW = 'http://localhost:8080/api/reviews/update/' + this.state.id;
-        e.preventDefault();
-        let reviewToJSON =  {
-            titleReview: this.state.titleReview,
-            contentReview: this.state.contentReview,
-            noteReview: this.state.noteReview
+        if( this.state.userOnline !== null){
+            if(this.state.userOnline.userId === this.state.user.id){
+                const userOnline = JSON.parse(localStorage.getItem('user'));
+                this.setState({userOnline});
+                const URL_UPDATE_REVIEW = 'http://localhost:8080/api/reviews/update/' + this.state.id;
+                e.preventDefault();
+                let reviewToJSON =  {
+                    titleReview: this.state.titleReview,
+                    contentReview: this.state.contentReview,
+                    noteReview: this.state.noteReview
+                }
+                console.log(JSON.stringify(reviewToJSON));
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reviewToJSON)
+                };
+                fetch(URL_UPDATE_REVIEW, requestOptions)
+                    .then(res => this.props.history.goBack())
+                    .catch(err => alert("Erreur lors de la suppresion de la critique"))
+            }else{
+                alert("vous êtes pas le propriétaire de cette critique");
+            }
+        }else{
+            alert("Veuillez-vous connecter pour modifier une critique");
         }
-        console.log(JSON.stringify(reviewToJSON));
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reviewToJSON)
-        };
-        fetch(URL_UPDATE_REVIEW, requestOptions)
-            .then(res => this.props.history.goBack())
-            .catch(err => alert("Erreur lors de la suppresion de la critique"))
     }
 
     changeTitleReviewHandle = (event) => {

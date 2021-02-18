@@ -9,10 +9,10 @@ class Review extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {reviews: []};
+        this.state = {reviews: [], user: [ ]};
         this.deleteReview = this.deleteReview.bind(this);
         this.editReview = this.editReview.bind(this);
-        console.log(this.props);
+
     }
 
     editReview(id){
@@ -39,16 +39,20 @@ class Review extends Component {
         } else{
             this.setState(this.state.reviews.length)
         }
+        const user = JSON.parse(localStorage.getItem('user'));
+        this.setState({user});
+        console.log(this.state);
     }
 
     render() {
+        
         return (
             <>
                  {(this.state.reviews.length !== 0 ? (
                 
                     this.state.reviews.map( review => (
                         <div key={review.idReview} className="col-12 mt-4">
-                            {review.userId === 3 && (
+                            { this.state.user !== null ? ( review.userId === this.state.user.userId ? (
                                 <Dropdown className="float-right">
                                 <Dropdown.Toggle variant="link" id="dropdown-basic">
                                   <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
@@ -59,8 +63,7 @@ class Review extends Component {
                                   <Dropdown.Item onClick={ () => this.deleteReview(review.idReview)}>Supprimer</Dropdown.Item>
                                 </Dropdown.Menu>
                               </Dropdown>
-                            )}
-
+                            ) : ("")) : ("") }
                             <div  className="media">
                                 <div className="media-body">
                                         <h5>{ review.titleReview }</h5>
@@ -83,5 +86,5 @@ export default withRouter(Review);
  * 
  * - Lors du clique sur utilisateur allait sur son profil
  * - Système de note (étoiles)
- * - Formattage de la date
+ *                                 
  */

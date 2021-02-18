@@ -9,13 +9,12 @@ import { withRouter,useParams, Redirect  } from 'react-router-dom';
 class Game extends Component {
     constructor(props) {
         super(props);
-        this.state = { games: [], redirectError: false };
+        this.state = { games: [], redirectError: false, user:[] };
         this.createdReview = this.createdReview.bind(this);
+        
     }
 
     componentDidMount(){
-        console.log('GAME');
-
         const URL_GET_GAME = 'http://localhost:8080/api/game/' + this.props.match.params.id;
         fetch(URL_GET_GAME)
         .then(async response => {
@@ -31,8 +30,9 @@ class Game extends Component {
             this.setState({ redirectError: true });
             this.props.history.goBack()
         });
+        const user = JSON.parse(localStorage.getItem('user'));
+        this.setState({user});
     }
-
 
     createdReview(){
         this.props.history.push({
@@ -40,7 +40,8 @@ class Game extends Component {
             state :{
             articleId : this.state.games.id,
             articleTitle : this.state.games.title,
-            genre: "game"
+            genre: "game",
+            userId: this.state.user.userId
             }});
     }
 
@@ -71,7 +72,9 @@ class Game extends Component {
                         </div>
                         <div className="row">
                             <div className="col-12 mt-3">
+                                {this.state.user !== null && (
                                 <Button onClick= {this.createdReview} className="float-right" variant="outline-dark"><FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon> Rédiger une critique</Button>
+                                )}
                             </div>
                         </div>
                         

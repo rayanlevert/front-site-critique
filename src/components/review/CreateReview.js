@@ -2,24 +2,31 @@ import React, { Component } from 'react';
 import { Card,Form,Button } from 'react-bootstrap';
 
 class CreateReview extends Component {
+ 
     constructor(props) {
         super(props);
-        const genre = this.props.location.state.genre;
-        const idArticle = this.props.location.state.articleId;
-
-        this.state = {
-            titleReview: '',
-            contentReview: '',
-            noteReview: null,
-            publishDate: '',
-            user: { id: 3}, 
-            article:{ id: this.props.location.state.articleId },
-            path: 'article/' + genre + '/' + idArticle
+        if(this.props.location.state){
+            const genre = this.props.location.state.genre;
+            const idArticle = this.props.location.state.articleId;
+            const userId = this.props.location.state.userId;
+            console.log(userId);
+            this.state = {
+                titleReview: '',
+                contentReview: '',
+                noteReview: null,
+                publishDate: '',
+                user: { id: userId}, 
+                article:{ id: idArticle },
+                path: 'article/' + genre + '/' + idArticle
+            }
+            this.changeTitleReviewHandle = this.changeTitleReviewHandle.bind(this);
+            this.changeContentReviewHandle = this.changeContentReviewHandle.bind(this);
+            this.changeNoteReviewHandle = this.changeNoteReviewHandle.bind(this);
+            this.saveReview = this.saveReview.bind(this);
+        }else{
+            this.props.history.goBack();
         }
-        this.changeTitleReviewHandle = this.changeTitleReviewHandle.bind(this);
-        this.changeContentReviewHandle = this.changeContentReviewHandle.bind(this);
-        this.changeNoteReviewHandle = this.changeNoteReviewHandle.bind(this);
-        this.saveReview = this.saveReview.bind(this);
+
     }
 
     saveReview = (e) => {
@@ -30,7 +37,7 @@ class CreateReview extends Component {
             contentReview: this.state.contentReview,
             noteReview: this.state.noteReview,
             publishDate: date.toJSON(),
-            user: { id: 3}, 
+            user: { id: this.props.location.state.userId}, 
             article:{ id: this.props.location.state.articleId }
         }
         console.log(JSON.stringify(reviewToJSON));
@@ -104,9 +111,3 @@ class CreateReview extends Component {
 }
 
 export default CreateReview;
-
-/**
- * TODO
- * 
- * récupere id user 
- */
