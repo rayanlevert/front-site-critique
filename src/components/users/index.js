@@ -3,7 +3,7 @@ import { Component, useEffect, useState } from "react";
 import { faBan, faCheck, faCoffee, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import Role from "./Role";
-import "../../styles/users/index.css";
+import "../../web/css/users/index.css";
 import AddUser from "./addUser";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
