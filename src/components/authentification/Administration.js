@@ -1,3 +1,5 @@
+import { faCog, faGamepad, faUser, faUserLock, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
 import { useSelector } from "react-redux"
@@ -15,21 +17,11 @@ export default function Administration() {
 
     return (
         <>
-            <NavDropdown className={hiddenOrNot} title="Administration" id="basic-nav-dropdown">
-                    <NavDropdown.Item  href="/admin/users">Listes des utilisateurs</NavDropdown.Item>
+           <NavDropdown  className={hiddenOrNot} title='Administration' id="basic-nav-dropdown">
+                    <NavDropdown.Item  href="/admin/users"><FontAwesomeIcon icon={faUsers}></FontAwesomeIcon> Listes des utilisateurs</NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href="/listgame" >Listes des jeux vidéo</NavDropdown.Item>
+                    <NavDropdown.Item href="/listgame" ><FontAwesomeIcon icon={faGamepad}></FontAwesomeIcon> Listes des jeux vidéo</NavDropdown.Item>
             </NavDropdown>
-
         </>
     )
 }
-
-/**
- *             <LinkContainer className={hiddenOrNot} to="/admin/users">
-                <Nav.Link >Administration</Nav.Link>
-            </LinkContainer>
-            <LinkContainer className={hiddenOrNot} to="/listgame">
-              <Nav.Link>Administration Liste Game</Nav.Link>
-            </LinkContainer>
- */

@@ -21,6 +21,8 @@ import ListReview from './components/review/ListReview';
 import ProtectedRoute from './router/ProtectedRoute';
 import ListGameAdmin from './pages/ListGameAdmin';
 import CreateGame from './components/Game/CreateGame';
+import { faGamepad, faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App() {
 
@@ -32,13 +34,13 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <LinkContainer to="/">
-              <Nav.Link className="navItem" >Home</Nav.Link>
+              <Nav.Link className="navItem" ><FontAwesomeIcon icon={faHome}></FontAwesomeIcon> Home</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/article/game">
-              <Nav.Link className="navItem">Jeux-vidéo</Nav.Link>
+              <Nav.Link className="navItem"><FontAwesomeIcon icon={faGamepad}></FontAwesomeIcon> Jeux-vidéo</Nav.Link>
             </LinkContainer>
-            <Administration></Administration>
           </Nav>
+          <Administration></Administration>
           <LoginOrLogout></LoginOrLogout>
         </Navbar.Collapse>
       </Navbar>
