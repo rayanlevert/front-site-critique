@@ -1,71 +1,109 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { FormattedDate } from '../Date/FormattedDate';
 
-class UpdateGame extends Component {
+class CreateGame extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.onChangeGameHandle = this.onChangeGameHandle.bind(this);
-    }
-
-    componentDidMount(){
-        const URL_GET_GAME = 'http://localhost:8080/api/game/' + this.props.match.params.id;
-        fetch(URL_GET_GAME)
-        .then(async response => {
-            const data = await response.json();
-            if (!response.ok) {
-
-                const error = (data && data.message) || response.statusText;
-                return Promise.reject(error);
-            }
-            this.setState({ 
-                id: data.id,
-                title: data.title,
-                publishDate: data.publishDate,
-                creationArticleDate: data.creationArticleDate,
-                minAge: data.minAge,
-                developer: data.developer,
-                publisher: data.publisher,
-                platform: data.platform,
-                genre: data.genre,
-                resume: data.resume,
-                valid: data.valid
-            });
-        })
-        .catch(error => {
-            this.setState({ redirectError: true });
-            this.props.history.goBack()
-        });
-    }
-    updateGame = (e) => {
-        const URL_UPDATE_GAME = 'http://localhost:8080/api/game';
-        e.preventDefault();
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state)
+        this.state = {
+            title: '',
+            publishDate: '',
+            creationArticleDate: '',
+            minAge: 0,
+            developer: '',
+            publisher: '',
+            platform: '',
+            genre: '',
+            resume: '',
+            valid: false,
+            file: '',
+            imagePreviewUrl: ''
         };
-        fetch(URL_UPDATE_GAME, requestOptions)
-            .then(res => alert("Modification réussi"))
-            .catch(err => alert("Erreur lors de la suppresion de la critique"))
+        this.onChangeGameHandle = this.onChangeGameHandle.bind(this);
+        this._handleSubmit= this._handleSubmit.bind(this);
+    }
 
+    _handleSubmit(e) {
+        e.preventDefault();
+        /*const date = new Date();
+        let reviewToJSON =  {
+            title: this.state.title,
+            publishDate: date.toJSON(),
+            creationArticleDate: date.toJSON(),
+            minAge: this.state.minAge,
+            developer: this.state.developer,
+            publisher: this.state.publisher,
+            platform: this.state.platform,
+            genre: this.state.genre,
+            resume: this.state.resume,
+            valid: true
+        }
+        console.log(JSON.stringify(reviewToJSON));
+        fetch('http://localhost:8080/api/game', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reviewToJSON)
+        })
+            .then(res => this.props.history.push('/listgame'))
+            .catch(err => alert("Erreur s'est produite lors de la création de votre critique, veuillez réesasayer"))*/
+
+    }
+    
+    _handleImageChange(e) {
+        e.preventDefault();
+    
+        let reader = new FileReader();
+        let file = e.target.files[0];
+    
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        }
+    
+        reader.readAsDataURL(file)
+        const data = new FormData();
+        data.append('photo', file );
+        fetch("http://localhost:3000/ressources/img/article/game", {
+             method: 'POST',
+             headers: {
+                 'Accept': 'application/json',
+                 'Content-Type': 'multipart/form-data'
+             },
+             body: data
+        }).then((response) =>  {
+           console.log(response.text());
+        })
+        .catch(error => console.log(error))
     }
 
     onChangeGameHandle = (e) => {
         this.setState({ [e.target.id]: e.target.value });
     }
+    re
     render() {
+        console.log(this.state)
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+          $imagePreview = (<img src={imagePreviewUrl} width="50%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article" />);
+        } else {
+          $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+        }
         return (
             <>
-                <Col lg="12">      
+                 <Col lg="12">      
                     <Card className="m-5">
                         <Card.Body>
                             <h2>{this.state.title}</h2>
                             <Row className="mt-3">
                                 <Col lg="5">
-                                    <img src={`../../ressources/img/article/game/${this.state.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
+                                {$imagePreview}
+                                
                                 </Col>
                                 <Col lg="7">
                                     <ListGroup>
@@ -78,11 +116,11 @@ class UpdateGame extends Component {
                                     </ListGroup>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col  md={{ span: 2, offset: 10 }} className="text-right">
-                                <small>Créer le <FormattedDate date={this.state.creationArticleDate}/></small>
+                            <Row className="mt-3">
+                                <Col lg="1">
+                                <input className="fileInput" type="file"  onChange={(e)=>this._handleImageChange(e)} />
                                 </Col>
-                            </Row>                                      
+                            </Row>                                   
                             <Form className="mt-5 text-left">
                                 <Row>
                                     <Col lg="6">
@@ -124,19 +162,17 @@ class UpdateGame extends Component {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Button variant="primary" type="submit" onClick={this.updateGame}>Sauvegarde</Button>
+                                        <Button variant="primary" type="submit" onClick={this._handleSubmit}>Sauvegarde</Button>
                                     </Col>
                                 </Row>
                             </Form>
                         </Card.Body>
                     </Card>
+
                 </Col>
             </>
         );
     }
 }
 
-export default UpdateGame;
-/**
- * 
- */
+export default CreateGame;

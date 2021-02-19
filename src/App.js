@@ -13,9 +13,14 @@ import CreateReview from './components/review/CreateReview';
 import UpdateReview from './components/review/UpdateReview';
 import Game from './components/Game/Game';
 import SignIn from './components/authentification/signin';
-import ProtectedAdminRoute from './components/authentification/ProtectedAdminRoute';
+import ProtectedAdminRoute from './router/ProtectedAdminRoute';
 import Administration from './components/authentification/Administration';
-import ProtectedProfileRoute from './components/users/ProtectedProfile';
+import ProtectedProfileRoute from './router/ProtectedProfile';
+import UpdateGame from './components/Game/UpdateGame';
+import ListReview from './components/review/ListReview';
+import ProtectedRoute from './router/ProtectedRoute';
+import ListGameAdmin from './pages/ListGameAdmin';
+import CreateGame from './components/Game/CreateGame';
 
 function App() {
 
@@ -27,7 +32,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link className="navItem" >Home</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/article/game">
               <Nav.Link className="navItem">Jeux-vidéo</Nav.Link>
@@ -62,8 +67,12 @@ function App() {
             <User></User>
           </ProtectedAdminRoute>
           <ProtectedProfileRoute exact path="/profile/:id" component={ProfileUser}></ProtectedProfileRoute>
-          <Route path="/create-review" component={CreateReview}></Route>
-          <Route path="/update-review/:id" component={UpdateReview}></Route>
+          <ProtectedRoute path="/create-review" redirectTo="/" component={CreateReview}></ProtectedRoute>
+          <ProtectedRoute path="/update-review/:id" redirectTo="/" component={UpdateReview}></ProtectedRoute>
+          <ProtectedAdminRoute path="/reviews/:id" redirectTo="/" component={ListReview}></ProtectedAdminRoute>
+          <ProtectedAdminRoute path="/update-game/:id" redirectTo="/" component={UpdateGame}></ProtectedAdminRoute>
+          <ProtectedAdminRoute path='/listgame' component={ListGameAdmin}></ProtectedAdminRoute>
+          <ProtectedAdminRoute path='/create-game' component={CreateGame}></ProtectedAdminRoute>
         </Switch>
       </div>
     </div>

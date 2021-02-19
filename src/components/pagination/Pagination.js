@@ -24,7 +24,7 @@ export class Pagination extends Component {
                             <a onClick={() => paginate(num)} href="#" className="page-link">{num}</a>
                         </li>
                     ))}
-                    {totalPosts >= indexOfLastPost && (
+                    {totalPosts > indexOfLastPost && (
                         <li className="page-item">
                             <a className="page-link" href="#" onClick={() => nextPage()}>Suivant</a>
                         </li>

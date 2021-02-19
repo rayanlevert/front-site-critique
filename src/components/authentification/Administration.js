@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 import { useSelector } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -15,9 +15,21 @@ export default function Administration() {
 
     return (
         <>
-            <LinkContainer className={hiddenOrNot} to="/admin/users">
-                <Nav.Link >Administration</Nav.Link>
-            </LinkContainer>
+            <NavDropdown className={hiddenOrNot} title="Administration" id="basic-nav-dropdown">
+                    <NavDropdown.Item  href="/admin/users">Listes des utilisateurs</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/listgame" >Listes des jeux vidéo</NavDropdown.Item>
+            </NavDropdown>
+
         </>
     )
 }
+
+/**
+ *             <LinkContainer className={hiddenOrNot} to="/admin/users">
+                <Nav.Link >Administration</Nav.Link>
+            </LinkContainer>
+            <LinkContainer className={hiddenOrNot} to="/listgame">
+              <Nav.Link>Administration Liste Game</Nav.Link>
+            </LinkContainer>
+ */

@@ -32,18 +32,17 @@ class ListReview extends Component {
             const response = await fetch(REVIEW_API_ID_BY_ARTICLE);
             const reviews = await response.json();
             this.setState({ reviews }); 
-            console.log(reviews);
         } else{
             this.setState(this.state.reviews.length)
         }
-        console.log(this.state);
     }
 
     render() {
         return (
             <>
+            {console.log("state",this.state)}
                 <Container fluid>
-                    <h2>Liste des critque</h2>
+                    <h2>Liste des critique</h2>
                     <Table responsive striped bordered hover variant="secondary" className="mt-3">
                         <thead>
                             <tr>
@@ -51,6 +50,7 @@ class ListReview extends Component {
                                 <th>Titre</th>
                                 <th>Contenu</th>
                                 <th>Date de publication</th>
+                                <th>Article</th>
                                 <th>Auteur</th>
                                 <th>Supprimer</th>
                             </tr>
@@ -62,6 +62,7 @@ class ListReview extends Component {
                                     <td>{review.titleReview}</td>
                                     <td>{review.contentReview}</td>
                                     <td><FormattedDate date={review.publishDate}  /></td>
+                                    <td>{review.articleTitle}</td>
                                     <td>{review.userUsername}<br /><small>(id :{review.userId})</small></td>
                                     <td><Button variant="danger" onClick={() => { if (window.confirm('Voulez-vous supprimer cette critique ?')) this.deleteReview(review.idReview) } }  variant="outline-danger"><FontAwesomeIcon icon={faTrashAlt} ></FontAwesomeIcon></Button></td>
                                 </tr>

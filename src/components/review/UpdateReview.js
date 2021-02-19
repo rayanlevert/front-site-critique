@@ -33,7 +33,6 @@ class UpdateReview extends Component {
         });
         const userOnline = JSON.parse(localStorage.getItem('user'));
         this.setState({userOnline});
-        console.log(this.state);
     }
 
     updateReview = (e) => {
@@ -56,7 +55,7 @@ class UpdateReview extends Component {
                 };
                 fetch(URL_UPDATE_REVIEW, requestOptions)
                     .then(res => this.props.history.goBack())
-                    .catch(err => alert("Erreur lors de la suppresion de la critique"))
+                    .catch(err => alert("Erreur lors de la modification de la critique"))
             }else{
                 alert("vous êtes pas le propriétaire de cette critique");
             }

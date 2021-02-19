@@ -53,23 +53,26 @@ class Game extends Component {
                 <Card className="m-5">
                     <Card.Body>
                         <h2>{this.state.games.title}</h2>
-                        <div className="row">
-                            <div className="col-5">
-                                <img src={`../../ressources/img/article/game/${this.state.games.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
-                            </div>
-                            <div className="col-6">
-                                <ListGroup key={this.state.games.id}>
-                                    <ListGroup.Item>Date de publication : <FormattedDate date={this.state.games.publishDate}/></ListGroup.Item>
-                                    <ListGroup.Item>Date de création de l'article : <FormattedDate date={this.state.games.creationArticleDate} /></ListGroup.Item>
-                                    <ListGroup.Item>Min age : {this.state.games.minAge}</ListGroup.Item>
-                                    <ListGroup.Item>Genre : {this.state.games.genre}</ListGroup.Item>
-                                    <ListGroup.Item>Developpeur : {this.state.games.developer}</ListGroup.Item>
-                                    <ListGroup.Item>Producteur : {this.state.games.publisher}</ListGroup.Item>
-                                    <ListGroup.Item>Plateforme : {this.state.games.platform}</ListGroup.Item>
-                                </ListGroup>
-                            </div>
-                            
-                        </div>
+                        <Row className="mt-3">
+                                <Col lg="5">
+                                    <img src={`../../ressources/img/article/game/${this.state.games.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
+                                </Col>
+                                <Col lg="7">
+                                    <ListGroup>
+                                        <ListGroup.Item><b>Min age : </b>{this.state.games.minAge}</ListGroup.Item>
+                                        <ListGroup.Item><b>Genre : </b>{this.state.games.genre}</ListGroup.Item>
+                                        <ListGroup.Item><b>Developpeur : </b> {this.state.games.developer}</ListGroup.Item>
+                                        <ListGroup.Item><b>Producteur : </b>{this.state.games.publisher}</ListGroup.Item>
+                                        <ListGroup.Item><b>Plateforme : </b>{this.state.games.platform}</ListGroup.Item>
+                                        <ListGroup.Item><h3 className="list-group-item-heading">Résume</h3>{this.state.games.resume}</ListGroup.Item>
+                                    </ListGroup>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col  md={{ span: 2, offset: 10 }} className="text-right">
+                                <small>Pubier le <FormattedDate date={this.state.games.publishDate}/></small>
+                                </Col>
+                            </Row>  
                         <div className="row">
                             <div className="col-12 mt-3">
                                 {this.state.user !== null && (
@@ -91,3 +94,22 @@ class Game extends Component {
 }
 
 export default withRouter(Game);
+/**
+ *  <div className="row">
+                            <div className="col-5">
+                                <img src={`../../ressources/img/article/game/${this.state.games.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
+                            </div>
+                            <div className="col-6">
+                                <ListGroup key={this.state.games.id}>
+                                    <ListGroup.Item>Date de publication : <FormattedDate date={this.state.games.publishDate}/></ListGroup.Item>
+                                    <ListGroup.Item>Date de création de l'article : <FormattedDate date={this.state.games.creationArticleDate} /></ListGroup.Item>
+                                    <ListGroup.Item>Min age : {this.state.games.minAge}</ListGroup.Item>
+                                    <ListGroup.Item>Genre : {this.state.games.genre}</ListGroup.Item>
+                                    <ListGroup.Item>Developpeur : {this.state.games.developer}</ListGroup.Item>
+                                    <ListGroup.Item>Producteur : {this.state.games.publisher}</ListGroup.Item>
+                                    <ListGroup.Item>Plateforme : {this.state.games.platform}</ListGroup.Item>
+                                </ListGroup>
+                            </div>
+                            
+                        </div>
+ */

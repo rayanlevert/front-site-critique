@@ -10,7 +10,7 @@ import Pagination from '../pagination/Pagination';
 const styles = {
     cardImage: {
         width: '100%',
-        height: '15vw',
+        height: '11vw',
         objectFit: 'cover'
     }
   }
@@ -22,7 +22,7 @@ class ListGame extends Component {
              games: [],
              loading: false,
              currentPage: 1,
-             postsPerPage: 3
+             postsPerPage: 6
              };
         this._createItemList.bind(this);
     }
