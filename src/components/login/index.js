@@ -83,7 +83,7 @@ function Login({ login }) {
                 <br />
                 <Button onClick={handleOnClick}>Se connecter</Button>
 
-                {redirect && <Redirect to="/home"></Redirect>}
+                {redirect && <Redirect to="/"></Redirect>}
             </Form>
 
             <div>

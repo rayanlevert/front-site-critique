@@ -17,7 +17,7 @@ function Logout({ logout }) {
     return (
         <>
             <Alert variant="info" show={true}>{"Vous venez de vous déconnecter. \nVous allez être redirigé vers la page d'accueil..."}</Alert>
-            { redirect && <Redirect to="/home"></Redirect>}
+            { redirect && <Redirect to="/"></Redirect>}
         </>
     )
 }

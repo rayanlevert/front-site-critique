@@ -1,14 +1,14 @@
-import { faAd, faBan, faExclamation, faExclamationTriangle, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faExclamationTriangle, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Col, Container, Form, Row, Modal, Button, Alert } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { connect, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
+import { update } from "../../redux/actions/actionCreatorUserAuth";
 import "../../styles/users/index.css";
-import FormUser from "./FormUser";
 import Role from "./Role";
 
-export function ProfileUser() {
+export function ProfileUser({update_user}) {
     const { id } = useParams();
     const [user, setUser] = useState({});
     const userAuth = useSelector(state => state.userAuth);
@@ -17,8 +17,9 @@ export function ProfileUser() {
     const [password, setPassword] = useState({ rawPassword: '', encodedPassword: '' });
 
     const [openDelete, isOpenDelete] = useState(false);
-    const [visible, setVisible] = useState(false);
-    const [visibleDeleted, setVisibleDeleted] = useState(false);
+    const [visiblePassword, setVisiblePassword] = useState(false);
+    const [visibleDelete, setVisibleDelete] = useState(false);
+    const [visibleSave, setVisibleSave] = useState(false);
     const [verif, setVerif] = useState(false);
 
     const [variant, setVariant] = useState("danger");
@@ -35,8 +36,9 @@ export function ProfileUser() {
 
     useEffect(() => {
         if (userAuth.userId !== user.id || !userAuth.roles.includes("ROLE_ADMIN")) {
-            <Redirect to="/home"></Redirect>
+            <Redirect to="/"></Redirect>
         }
+
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => {
                 response.json().then(user => {
@@ -49,24 +51,33 @@ export function ProfileUser() {
     const onChange = (e) => {
         let id = e.target.id;
         setUser({ ...user, [e.target.id]: e.target.value });
-        <Redirect to='/home'></Redirect>
 
         if (id === "passwordVerif") {
             setUser({ ...user, password: e.target.value })
         }
     }
 
-    const displayAlert = (variant, message) => {
+    const displayAlert = (variant, message, id) => {
         setVariant(variant);
-        setVisibleDeleted(true);
-        let alertDeleted = document.getElementById('alertDeleted');
-        alertDeleted.textContent = message;
+        console.log(id);
 
-        if (variant == 'success') {
-            setTimeout(() => {
-                setRedirect(true);
-            }, 1500);
+        switch(id) {
+            case "alertDelete":
+                setVisibleDelete(true);
+            case "alertSave":
+                setVisibleSave(true);
         }
+
+        let alert = document.getElementById(id);
+        alert.textContent = message;
+
+        setTimeout(() => {
+            if (id === "alertDelete") {
+                setRedirect(true);
+            } else setVisibleSave(false);
+        }, 1500);
+
+
     }
 
     const handleSubmitPasswordVerif = (e) => {
@@ -77,10 +88,10 @@ export function ProfileUser() {
         }).then(response => {
             if (response.status === 200) {
                 setVerif(true);
-                setVisible(false);
+                setVisiblePassword(false);
                 setUser({ ...user, password: password.rawPassword })
                 handleClosePassword();
-            } else setVisible(true);
+            } else setVisiblePassword(true);
         })
     }
 
@@ -93,7 +104,14 @@ export function ProfileUser() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
-        }).then(response => console.log(response));
+        }).then(response => {
+            response.json().then(response => {
+                if (response.status === "OK") {
+                    displayAlert("success", response.message, "alertSave");
+                    update_user(user);
+                }
+            })
+        });
     }
 
     const handleSubmitDelete = () => {
@@ -101,8 +119,8 @@ export function ProfileUser() {
             method: 'DELETE'
         }).then(response => response.json().then(response => {
             if (response.status === "OK") {
-                displayAlert("success", response.message);
-            } else displayAlert("danger", response.message);
+                displayAlert("success", response.message, "alertDelete");
+            } else displayAlert("info", response.message, "alertDelete");
         }))
     }
 
@@ -110,6 +128,8 @@ export function ProfileUser() {
         <>
             <h1>Bienvenue sur votre page de profil {user.firstname} !</h1>
             <small>Vous pouvez ici modifier chaque champ de votre choix.</small>
+            <Alert variant={variant} id="alertSave" show={visibleSave}></Alert>
+
             <Container fluid className="containerProfilUser justify-content-around">
                 <Row style={{ marginTop: "3rem" }}>
                     <Col sm={4}>
@@ -158,7 +178,7 @@ export function ProfileUser() {
                 </Row>
                 <Row>
                     <Col sm={6}>
-                        <Button variant="primary" size="sm" onClick={handleSubmitSave}><FontAwesomeIcon icon={faSave}></FontAwesomeIcon> Sauvegarder</Button> &nbsp;
+                        <Button variant="primary" size="sm" onClick={handleSubmitSave}><FontAwesomeIcon icon={faSave}></FontAwesomeIcon> Modifier</Button> &nbsp;
                         <Button variant="danger" size="sm" onClick={handleOpenDelete}><FontAwesomeIcon icon={faBan}></FontAwesomeIcon> Effacer le profil</Button>
                     </Col>
                 </Row>
@@ -170,7 +190,7 @@ export function ProfileUser() {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Alert id="alert" variant="danger" show={visible}>Le mot de passe est incorrect.</Alert>
+                    <Alert id="alertDelete" variant="danger" show={visiblePassword}>Le mot de passe est incorrect.</Alert>
                     <Form>
                         <Form.Group controlId="passwordVerif">
                             <Form.Label>Ancien mot de passe</Form.Label>
@@ -195,7 +215,7 @@ export function ProfileUser() {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Alert variant={variant} id="alertDeleted" show={visibleDeleted}></Alert>
+                    <Alert variant={variant} id="alertDelete" show={visibleDelete}></Alert>
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -204,8 +224,13 @@ export function ProfileUser() {
                 </Modal.Footer>
             </Modal>
 
-            { redirect && <Redirect to="/home"></Redirect>}
+            { redirect && <Redirect to="/"></Redirect> }
         </>
     )
-
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return { update_user: (userUpdated) => dispatch(update(userUpdated)) }
+}
+
+export default connect(null, mapDispatchToProps)(ProfileUser)

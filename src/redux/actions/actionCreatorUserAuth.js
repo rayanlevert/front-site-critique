@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNIN } from "../actionTypes";
+import { LOGIN, LOGOUT, SIGNIN, UPDATE } from "../actionTypes";
 
 export function login(userAuth) {
     return { type: LOGIN, payload: userAuth }
@@ -10,4 +10,8 @@ export function logout() {
 
 export function signin(userSignedIn) {
     return { type: SIGNIN, payload: userSignedIn }
+}
+
+export function update(userUpdated) {
+    return { type: UPDATE, payload: userUpdated }
 }

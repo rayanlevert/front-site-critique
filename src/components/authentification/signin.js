@@ -13,7 +13,6 @@ export function SignIn({sign_in, log_in}) {
 
     useEffect(() => {
         sign_in(userSignIn);
-        console.log(userLogin);
         if (userLogin.userId !== 0) {
             log_in(userLogin);
         }
@@ -100,7 +99,7 @@ export function SignIn({sign_in, log_in}) {
                 </Row>
             </Form>
 
-            {redirect && <Redirect to="/home"></Redirect>}
+            {redirect && <Redirect to="/"></Redirect>}
         </>
     )
 }
