@@ -27,6 +27,10 @@ const Movies = {
     'Accept' : 'application/json',
   'Content-Type' : 'application/json'
   }),
+  update: movie => requests.put(`api/movies`,  movie ).set({
+    'Accept' : 'application/json',
+  'Content-Type' : 'application/json'
+  }),
   findOneById : (id) => requests.get(`api/movies/${encode(id)}`),
 };
 export default {

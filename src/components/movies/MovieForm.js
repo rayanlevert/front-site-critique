@@ -1,9 +1,8 @@
 import { Col, Form, Row } from "react-bootstrap";
-import { Editor } from '@tinymce/tinymce-react';
+import { Editor,IAllProps } from '@tinymce/tinymce-react';
 import { connect } from "react-redux";
 import { useState } from 'react';
-
-import { load_movies_create_submitted } from "../../redux/actions/movies/actionMovies";
+import { load_movies_create_submitted, load_movies_update_submitted } from "../../redux/actions/movies/actionMovies";
 function MovieForm({movieAdd}){
     
     const getEmptyMovie = () =>
@@ -24,8 +23,8 @@ function MovieForm({movieAdd}){
             "webContent": null
         };
     }
-    const[movieValue, setMovieValue] = useState(getEmptyMovie());
-
+    const[movieValue, setMovieValue] = useState(movieAdd);
+    console.log(movieValue);
     //changement des valeurs
     const changeMovieValues = (e) =>{
         console.log(e);
@@ -120,20 +119,21 @@ function MovieForm({movieAdd}){
                     textareaName="webContent"
                     initialValue={ movieValue.webContent }
                     init={{
-                    height: 500,
-                    menubar: false,
-                    plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount'
-                    ],
-                    toolbar:
-                        'undo redo | formatselect | bold italic backcolor | \
-                        alignleft aligncenter alignright alignjustify | \
-                        bullist numlist outdent indent | removeformat | help'
-                    }}
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                          'advlist autolink lists link image charmap print preview anchor',
+                          'searchreplace visualblocks code fullscreen',
+                          'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                          'undo redo | formatselect | bold italic backcolor | \
+                          alignleft aligncenter alignright alignjustify | \
+                          bullist numlist outdent indent | removeformat | help'
+                      }}
                     onEditorChange={ changeWebContent }
                 />
+                
             </Form.Group>
 
         </Form>
@@ -150,7 +150,8 @@ function MovieForm({movieAdd}){
 const mapDispatchToProps = (dispatch) => {
     return { movieAdd: (movieValue) => {
         return dispatch(load_movies_create_submitted(movieValue));
-    } }
+    },
+ }
 }
 
 export default connect(null,mapDispatchToProps)(MovieForm)

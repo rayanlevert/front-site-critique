@@ -1,8 +1,6 @@
 import { LOAD_MOVIES_CREATE_SUBMITTED, 
-            LOAD_MOVIES_PAGE, 
-            UNLOAD_MOVIES_PAGE, 
-            LOAD_MOVIES_CREATE,
-            MOVIE_VIEW_PAGE_LOAD 
+            MOVIE_VIEW_PAGE_LOAD, 
+            LOAD_MOVIES_UPDATE_SUBMITTED
         } from "../../actionTypes";
 
 
@@ -13,4 +11,9 @@ export function load_movies_create_submitted(movieValue)
 export function movie_view_page_load(id)
 {
     return{ type: MOVIE_VIEW_PAGE_LOAD, payload: id }
+}
+export function load_movies_update_submitted(movieEdit)
+{
+    
+    return{ type : LOAD_MOVIES_UPDATE_SUBMITTED, payload: movieEdit }
 }

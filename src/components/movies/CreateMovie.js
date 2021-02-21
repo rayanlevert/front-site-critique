@@ -17,24 +17,11 @@ function CreateMovie()
     const [show,isVisible] = useState(false);
     const toggleOpen = () => isVisible(true);
     const toggleClose = () => isVisible(false);
-
-
-
-
-    //gestion des Dates
-    const getFormattedStringDate = (dt) =>{
-
-        let myDt = dt;
-        let mydTEdit = myDt.toISOString().split('T')[0] + ' '+ myDt.toTimeString().split(' ')[0]; 
-        return mydTEdit;
-    };
     
     //submit form
     const handleCreate = (e) => {
         e.preventDefault();
-        let movieSubmitted = movie;
-
-        console.log(movieSubmitted);
+        let movieSubmitted = movie.moviesReducer.movie;
         try{
             let movieValidated = movieValidation(movieSubmitted);
             if(movieValidated === true)
@@ -42,13 +29,14 @@ function CreateMovie()
                 movieSubmitted.creationArticleDate = (new Date()).toJSON();
                 movieSubmitted.publishDate = (new Date(movieSubmitted.publishDate)).toJSON();
                 agent.Movies.create(JSON.stringify(movieSubmitted)).then((res) => {
-                    console.log(res);
+                    /*
+                    REDIRECTION
+                    */
                 });  
             }
             
 
         }catch(e){
-            console.log(e);
             return null;
         }
     }
@@ -61,8 +49,6 @@ function CreateMovie()
         }
         catch(e){
             //erreurs
-            console.log("validation catch : ");
-            console.log(e);
             val = false;
         }
         finally{
