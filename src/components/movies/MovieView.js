@@ -106,7 +106,7 @@ render() {
                                     <ListGroup.Item><b>Age minimum : </b>{movie.minAge}</ListGroup.Item>
                                     <ListGroup.Item><b>Date de sortie : </b><FormattedDate date={movie.publishDate}/></ListGroup.Item>
                                     <ListGroup.Item><b>Genre : </b>{movie.genre}</ListGroup.Item>
-                                    <ListGroup.Item><b>Réalisateur : </b> {movie.developer}</ListGroup.Item>
+                                    <ListGroup.Item><b>Réalisateur : </b> {movie.realisator}</ListGroup.Item>
                                     <ListGroup.Item><b> Acteurs principaux: </b>{movie.actors}</ListGroup.Item>
                                     <ListGroup.Item><b>Pays d'origine : </b>{movie.nationality}</ListGroup.Item>
                                     <ListGroup.Item><h3 className="list-group-item-heading">Synopsis</h3>{movie.synopsys}</ListGroup.Item>
