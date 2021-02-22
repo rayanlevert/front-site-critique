@@ -20,7 +20,7 @@ const requests = {
   put: (url, body) =>
     superagent.put(`${API_ROOT}${url}`, body),
   post: (url, body) =>
-    superagent.post(`${API_ROOT}${url}`, body, headers)
+    superagent.post(`${API_ROOT}${url}`, body, headers).then(responseBody)
 };
 const Movies = {
   all: requests.get(`api/movies/`), //Récupérer la liste complète des films sans filtre, retourne un tableau
@@ -35,6 +35,10 @@ const Movies = {
   delete: id => requests.del(`api/movies/${id}`),
   findOneById : id => requests.get(`api/movies/${encode(id)}`),
 };
+const Articles = {
+  getPage: params => requests.post(`api/articles/page`, params), //Récupérer la liste complète des films sans filtre, retourne un tableau
+};
 export default {
     Movies,
+    Articles
   };

@@ -12,3 +12,5 @@ export const LOAD_MOVIES_CREATE_SUBMITTED = "load_movies_create_submitted";
 export const LOAD_MOVIES_CREATE = "load_movies_create";
 export const LOAD_MOVIES_UPDATE_SUBMITTED = "load_movies_update_submitted";
 export const MOVIE_VIEW_PAGE_LOAD = "movie_view_page_load";
+
+export const LOAD_HOME_PAGE = "load_home_page";
