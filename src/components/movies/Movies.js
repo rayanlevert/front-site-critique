@@ -34,6 +34,27 @@ const mapStateToProps = state => ({
         
   });
 
+
+  const isAdmin = (props) =>{
+    console.log("fonction ISADMIN");
+    try{
+        if(props.userAuth.isLogged === true && props.userAuth.roles !== undefined)
+        {
+          if(props.userAuth.roles[0].name == "ROLE_ADMIN")
+          {
+            console.log('coucou');
+            return(
+            <div className="modalForm">
+              <CreateMovie/>
+              </div> 
+          );
+          }
+        }
+        
+      }
+      finally{} 
+  }
+
   const deleteMovie =(e)=>
       {
         let movieId = e.target.getAttribute("data-id");
@@ -52,8 +73,8 @@ class Movies extends Component
         this.state = {
             movie: []
         }
-        console.log("this.state à la fin de constructor(props)");
-        console.log(this.state);
+        console.log("this.props à la fin de constructor(props)");
+        console.log(props);
         
     }
 
@@ -88,15 +109,15 @@ class Movies extends Component
       
       render = () => {
           return (<>
-            <div className="modalForm">
-            <CreateMovie/>
-            </div>
+       
+            {isAdmin(this.props)}        
+            
               <Row className="col-12 justify-content-around">
                { this.state.movie.map(movie=> 
                <Col className="col-auto m-5">
-               <div className="card" key={ movie.id }>
+               <div className="card movie-card" key={ movie.id }>
                 <img className="card-img-top img-movie" id={"img-"+movie.id} data-lazy={ this.getPoster(movie.title, movie.id) } />
-                <div className="card-body">
+                <div className="card-body movie-card-body">
                     <h6 className="card-title">{movie.title}</h6>
                     <small className="card-subtitle text-muted">{ new Date(movie.publishDate).toLocaleDateString() }</small>
                     <p className="card-text genres">{ movie.genre }</p>

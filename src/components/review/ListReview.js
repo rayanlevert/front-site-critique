@@ -1,15 +1,19 @@
 import { faEllipsisH, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
-import { Media,Dropdown, Container, Button, Table } from 'react-bootstrap';
+import { Media,Dropdown, Container, Button, Table, Card } from 'react-bootstrap';
 import { FormattedDate, FormattedDateWithTime } from '../Date/FormattedDate';
 import { withRouter } from "react-router-dom";
+import Pagination from '../pagination/Pagination';
  
 class ListReview extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {reviews: []};
+        this.state = {reviews: [],
+            currentPage: 1,
+            postsPerPage: 10,
+        };
         this.deleteReview = this.deleteReview.bind(this);
     }
 
@@ -38,12 +42,23 @@ class ListReview extends Component {
     }
 
     render() {
+        const { currentPage, postsPerPage, reviews } = this.state;
+        const indexOfLastPost = currentPage * postsPerPage;
+        const indexOfFirstPost = indexOfLastPost - postsPerPage;
+        const currentPosts = reviews.slice(indexOfFirstPost, indexOfLastPost);
+    
+        const paginate = pageNum => this.setState({ currentPage: pageNum });
+    
+        const nextPage = () => this.setState({ currentPage: currentPage + 1 });
+    
+        const prevPage = () => this.setState({ currentPage: currentPage - 1 });
         return (
             <>
             {console.log("state",this.state)}
                 <Container fluid>
+                    <Card className="col-12">
                     <h2>Liste des critique</h2>
-                    <Table responsive striped bordered hover variant="secondary" className="mt-3">
+                    <Table responsive striped bordered hover className="mt-3">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -56,7 +71,7 @@ class ListReview extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.reviews.map( review => (
+                            {currentPosts.map( review => (
                                 <tr key={review.idReview}>
                                     <td>{review.idReview}</td>
                                     <td>{review.titleReview}</td>
@@ -69,6 +84,8 @@ class ListReview extends Component {
                                 ))}
                         </tbody>
                     </Table>
+                    <Pagination indexOfLastPost={indexOfLastPost} indexOfFirstPost={indexOfFirstPost} postsPerPage={postsPerPage} totalPosts={reviews.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
+                    </Card>
                 </Container>
             </>
         );
