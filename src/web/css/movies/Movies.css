@@ -1,0 +1,20 @@
+.card{
+    width: 18rem;
+    padding: 6px;
+}
+.card-body h6{
+    height: 60px;
+    font-weight: bolder;
+    text-shadow: 1px 1px black;
+    overflow: hidden;
+}
+.card-body .btn{
+    color: #9e0003;
+    background-color: #ededed;
+    font-weight: bolder;
+    border-color: #9e0003;
+}
+.card-body .btn:hover{
+    color: #aa1417;
+    scale: 1.01;
+}

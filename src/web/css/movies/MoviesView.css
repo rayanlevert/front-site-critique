@@ -1,0 +1,20 @@
+#title-movie-view{
+    background-image: url("https://picsum.photos/720/302");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 720px;
+    height: 302px;
+    padding-top: 151px;
+
+}
+#title-movie-view h3{
+    background-color: rgba(255,255,255,0.45);
+    border: 4px outset rgba(0,0,0,0.4);
+}
+#title-movie-view h3 .text-muted{
+    text-shadow: 1px 1px rgba(0,0,0,0.7);
+}
+#age-warning {
+    font-size : 16px;
+}

@@ -5,7 +5,7 @@ import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap
 import { connect, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { update } from "../../redux/actions/actionCreatorUserAuth";
-import "../../styles/users/index.css";
+import "../../web/css/users/index.css";
 import Role from "./Role";
 
 export function ProfileUser({update_user}) {

@@ -21,8 +21,11 @@ import ListReview from './components/review/ListReview';
 import ProtectedRoute from './router/ProtectedRoute';
 import ListGameAdmin from './pages/ListGameAdmin';
 import CreateGame from './components/Game/CreateGame';
-import { faGamepad, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faGamepad, faHome, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import Movies from "./components/movies/Movies";
+import MovieView from "./components/movies/MovieView";
 
 function App() {
 
@@ -38,6 +41,9 @@ function App() {
             </LinkContainer>
             <LinkContainer to="/article/game">
               <Nav.Link className="navItem"><FontAwesomeIcon icon={faGamepad}></FontAwesomeIcon> Jeux-vidéo</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/movies">
+              <Nav.Link className="navItem"><FontAwesomeIcon icon={faVideo}></FontAwesomeIcon> Films</Nav.Link>
             </LinkContainer>
           </Nav>
           <Administration></Administration>
@@ -64,6 +70,12 @@ function App() {
           </Route>
           <Route path="/signin">
             <SignIn></SignIn>
+          </Route>
+          <Route path="/movies">
+            <Movies />
+          </Route>
+          <Route path="/movie/view/:id">
+            <MovieView />
           </Route>
           <ProtectedAdminRoute exact path="/admin/users" redirectTo="/home">
             <User></User>

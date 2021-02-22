@@ -1,11 +1,10 @@
 import { faBan, faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { Col, Container, Row, Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Link, Redirect, withRouter } from "react-router-dom";
-import "../../styles/users/index.css";
-import PaginationUser from "../pagination/PaginationUser";
+import { Component, useEffect, useState } from "react";
+import { faBan, faCheck, faCoffee, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import Role from "./Role";
+import "../../web/css/users/index.css";
 import AddUser from "./addUser";
 import Role from "./Role";
 
