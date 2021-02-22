@@ -6,9 +6,12 @@ import { connect, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { update } from "../../redux/actions/actionCreatorUserAuth";
 import "../../web/css/users/index.css";
+import roleToString from "../Role/roleToString";
 import Role from "./Role";
 
-export function ProfileUser({update_user}) {
+export function ProfileUser({ update_user }) {
+    const ROLES = ["ROLE_USER", "ROLE_ADMIN"];
+
     const { id } = useParams();
     const [user, setUser] = useState({});
     const userAuth = useSelector(state => state.userAuth);
@@ -35,13 +38,15 @@ export function ProfileUser({update_user}) {
 
 
     useEffect(() => {
+        
         if (userAuth.userId !== user.id || !userAuth.roles.includes("ROLE_ADMIN")) {
             <Redirect to="/"></Redirect>
         }
-
+        
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => {
                 response.json().then(user => {
+                    console.log(user);
                     setUser(user);
                     setPassword({ ...password, encodedPassword: user.password })
                 })
@@ -57,11 +62,31 @@ export function ProfileUser({update_user}) {
         }
     }
 
+    const checkRole = (role) => {
+        if (user.roles !== undefined && user.roles.some(e => e.name === role)) {
+            return true;
+        } return false;
+    }
+
+    const onChangeRoles = (e) => {
+        let object;
+        const array = user.roles;
+        object = { "name": e.target.id }
+        if (e.target.checked) {
+            array.push(object);
+        } else {
+            console.log("a",array);
+            const index = array.findIndex((role) => role.name === e.target.id);
+            array.splice(index, 1);
+        }
+        setUser({ ...user, roles: array });
+    }
+
     const displayAlert = (variant, message, id) => {
         setVariant(variant);
         console.log(id);
 
-        switch(id) {
+        switch (id) {
             case "alertDelete":
                 setVisibleDelete(true);
             case "alertSave":
@@ -109,7 +134,7 @@ export function ProfileUser({update_user}) {
                 if (response.status === "OK") {
                     displayAlert("success", response.message, "alertSave");
                     update_user(user);
-                }
+                } else displayAlert("danger", response.message, "alertSave");
             })
         });
     }
@@ -173,7 +198,11 @@ export function ProfileUser({update_user}) {
                     <Col sm={2}>
                         <b>ROLES</b>
                         <hr class="solid"></hr>
-                        <Role roles={user.roles}></Role>
+                        <Form.Group controlId="roles">
+                            {
+                                ROLES.map((role) => <Form.Check onChange={onChangeRoles} custom type="checkbox" id={role} label={roleToString(role)} checked={checkRole(role)} required />)
+                            }
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Row>
@@ -224,7 +253,7 @@ export function ProfileUser({update_user}) {
                 </Modal.Footer>
             </Modal>
 
-            { redirect && <Redirect to="/"></Redirect> }
+            { redirect && <Redirect to="/"></Redirect>}
         </>
     )
 }
