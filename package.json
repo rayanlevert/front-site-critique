@@ -10,7 +10,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
-    "@tinymce/tinymce-react": "^3.10.1",
+    "@tinymce/tinymce-react": "^3.10.2",
     "bootstrap": "^4.6.0",
     "dompurify": "^2.2.6",
     "react": "^17.0.1",
@@ -22,9 +22,11 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
+    "react-validation": "^3.0.7",
     "redux": "^4.0.5",
     "superagent": "^6.1.0",
     "superagent-promise": "^1.1.0",
+    "validator": "^13.5.2",
     "web-vitals": "^1.1.0"
   },
   "scripts": {

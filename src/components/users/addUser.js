@@ -1,17 +1,19 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
 import { have_users_been_edited } from "../../redux/actions/actionCreatorRefresh";
 import roleToString from "../Role/roleToString";
+import validator from 'validator';
 
-function AddUser({is_refreshed}) {
+function AddUser({ is_refreshed }) {
     const ROLES = ["ROLE_ADMIN"];
 
     const [open, isOpen] = useState(false);
     const [variant, setVariant] = useState("danger");
     const [visible, setVisible] = useState(false);
+    const [checked, setChecked] = useState(true);
 
     const handleOpen = () => isOpen(true);
     const handleClose = () => isOpen(false);
@@ -29,20 +31,20 @@ function AddUser({is_refreshed}) {
     const onChangeRoles = (e) => {
         let object;
         const array = [];
-        if(e.target.checked) {
-            object = {"name": e.target.id}
+        if (e.target.checked) {
+            object = { "name": e.target.id }
             array.push(object);
         } else {
             const index = array.indexOf(object);
             array.splice(index, 1);
         }
-        setUser({...user, roles: array});
+        setUser({ ...user, roles: array });
     }
-    
+
     const displayAlert = (variant, message) => {
         setVisible(true);
         setVariant(variant);
-        let alert = document.getElementById('alert');
+        const alert = document.querySelector('#alert');
         alert.textContent = message;
     }
 
