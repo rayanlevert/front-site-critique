@@ -1,17 +1,13 @@
+import { faBan, faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Component, useEffect, useState } from "react";
-import { faBan, faCheck, faCoffee, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons'
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
-import Role from "./Role";
-import "../../styles/users/index.css";
-import AddUser from "./addUser";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link, Redirect, Route, Switch } from "react-router-dom";
-import { ProfileUser } from "./profileUser";
-import { withRouter } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import InternalServerError from "../errorspages/InternalServerError";
-import Pagination from '../pagination/Pagination';
+import { Link, Redirect, withRouter } from "react-router-dom";
+import "../../styles/users/index.css";
+import PaginationUser from "../pagination/PaginationUser";
+import AddUser from "./addUser";
+import Role from "./Role";
 
 function User({ history }) {
 
@@ -19,25 +15,36 @@ function User({ history }) {
         let rows = {}
         let counter = 1
         users.forEach((item, idx) => {
-          rows[counter] = rows[counter] ? [...rows[counter]] : []
-          if (idx % 3 === 0 && idx !== 0) {
-            counter++
             rows[counter] = rows[counter] ? [...rows[counter]] : []
-            rows[counter].push(item)
-          } else {
-            rows[counter].push(item)
-          }
+            if (idx % 3 === 0 && idx !== 0) {
+                counter++
+                rows[counter] = rows[counter] ? [...rows[counter]] : []
+                rows[counter].push(item)
+            } else {
+                rows[counter].push(item)
+            }
         })
         return rows
+    }
+
+    const getUsers = () => {
+        fetch('http://localhost:8080/api/users/getAll')
+            .then(response => {
+                response.json().then(usersRes => {
+                    setUsers(usersRes);
+                })
+            })
     }
 
     const [users, setUsers] = useState([]);
     const [redirect, setRedirect] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [usersPerPage, setUsersPerPage] = useState(4);
+    const [usersPerPage, setUsersPerPage] = useState(10);
 
-    const user = useSelector(state => state.userAuth);
+    const userAuth = useSelector(state => state.userAuth);
+    const refresh = useSelector(state => state.refresh);
+
     const rows = createItemList();
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -45,21 +52,13 @@ function User({ history }) {
 
     const paginate = (pageNum) => setCurrentPage(pageNum);
 
-    const nextPage = () => setCurrentPage(currentPage+1);
+    const nextPage = () => setCurrentPage(currentPage + 1);
+
+    const prevPage = () => setCurrentPage(currentPage - 1);
     
-    const prevPage = () => setCurrentPage(currentPage-1);
-
-    const state = useSelector(state => console.log("state", state));
-
     useEffect(() => {
-        console.log("oui");
-        fetch('http://localhost:8080/api/users/getAll')
-        .then(response => {
-            response.json().then(usersRes => {
-                setUsers(usersRes);
-            })
-        })
-    }, [setUsers])
+        getUsers();
+    }, [refresh])
 
     const profileOnClick = (id) => {
         history.push(`/profile/${id}`);
@@ -94,11 +93,13 @@ function User({ history }) {
                                         <td className="text-center">{user.enabled ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faBan} />}</td>
                                     </tr>
                                 )}
+                                <PaginationUser indexOfLastUser={indexOfLastUser} indexOfFirstUser={indexOfFirstUser} usersPerPage={usersPerPage} totalUsers={users.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
                             </tbody>
                         </Table>
                     </Col>
                 </Row>
-                <Pagination indexOfLastPost={indexOfLastUser} indexOfFirstPost={indexOfFirstUser} postsPerPage={usersPerPage} totalPosts={users.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
+
+
 
             </Container>
 
@@ -108,6 +109,5 @@ function User({ history }) {
         </>
     );
 }
-
 
 export default withRouter(User);

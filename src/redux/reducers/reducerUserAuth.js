@@ -6,7 +6,6 @@ const initialState = localStorage.getItem('user') ? { username: user.username, u
 
 const reducer = (state = initialState, action) => {
     let userAuth;
-    console.log(action);
     switch (action.type) {
         
         case LOGIN:

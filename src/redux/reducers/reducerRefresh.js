@@ -1,12 +1,12 @@
 import { ADD_USER } from "../actionTypes";
 
-const initialState = { user: {lastname: '', firstname: '', password: '', email: '', username: '', roles: []} }
+const initialState = 0;
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_USER:
-            const user = action.payload;
-            return user;
+            state = state+1;
+            return state;
             break;
     
         default:

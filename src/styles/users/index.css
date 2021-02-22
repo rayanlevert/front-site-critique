@@ -28,3 +28,7 @@
 hr.solid {
     border-top: 2px solid #bbb;
 }
+
+.pagination {
+    justify-content: 0 !important;
+}

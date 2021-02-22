@@ -5,20 +5,20 @@ import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 
 export default function LoginOrLogout() {
-    const user = useSelector(state => state.userAuth);
-    console.log(user);
+    const userAuth = useSelector(state => state.userAuth);
+
     return (
         <>
             {
-                !user.isLogged ? (
+                !userAuth.isLogged ? (
                     <LinkContainer to="/login">
                         <Nav.Link><FontAwesomeIcon icon={faUserLock}></FontAwesomeIcon> Se connecter</Nav.Link>
                     </LinkContainer>
 
                 ) : (
                         <>
-                            <NavDropdown alignRight title={user.username} id="basic-nav-dropdown">
-                                <NavDropdown.Item href={'/profile/' + user.userId}><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Mon profil</NavDropdown.Item>
+                            <NavDropdown alignRight title={userAuth.username} id="basic-nav-dropdown">
+                                <NavDropdown.Item href={'/profile/' + userAuth.userId}><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Mon profil</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/logout"><FontAwesomeIcon icon={faSignOutAlt}></FontAwesomeIcon> Se déconnecter</NavDropdown.Item>
                             </NavDropdown>

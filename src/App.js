@@ -6,7 +6,7 @@ import LoginOrLogout from './components/authentification/loginOrLogout';
 import Login from './components/login';
 import Logout from './components/logout';
 import User from './components/users';
-import { ProfileUser } from './components/users/profileUser';
+import ProfileUser from './components/users/profileUser';
 import Article from './pages/Article';
 import Home from './pages/Home';
 import CreateReview from './components/review/CreateReview';
