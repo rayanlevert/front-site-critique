@@ -55,7 +55,7 @@ class Game extends Component {
                         <h2>{this.state.games.title}</h2>
                         <Row className="mt-3">
                                 <Col lg="5">
-                                    <img src={`../../ressources/img/article/game/${this.state.games.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
+                                    <img onError={(e) => {e.target.src = '../../ressources/img/article/game/default.svg.png'; e.target.onError = null;}} src={`../../ressources/img/article/game/${this.state.games.id}.jpg`} className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
                                 </Col>
                                 <Col lg="7">
                                     <ListGroup>

@@ -16,7 +16,6 @@ class UpdateGame extends Component {
         .then(async response => {
             const data = await response.json();
             if (!response.ok) {
-
                 const error = (data && data.message) || response.statusText;
                 return Promise.reject(error);
             }
@@ -65,11 +64,12 @@ class UpdateGame extends Component {
                             <h2>{this.state.title}</h2>
                             <Row className="mt-3">
                                 <Col lg="5">
-                                    <img src={`../../ressources/img/article/game/${this.state.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
+                                    <img onError={(e) => {e.target.src = '../../ressources/img/article/game/default.svg.png'; e.target.onError = null; e.target.width="300";}} src={`../../ressources/img/article/game/${this.state.id}.jpg`} width="35%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article"></img>
                                 </Col>
                                 <Col lg="7">
                                     <ListGroup>
                                         <ListGroup.Item><b>Min age : </b>{this.state.minAge}</ListGroup.Item>
+                                        <ListGroup.Item><b>Date de sortie : </b><FormattedDate date={this.state.publishDate} /></ListGroup.Item>
                                         <ListGroup.Item><b>Genre : </b>{this.state.genre}</ListGroup.Item>
                                         <ListGroup.Item><b>Developpeur : </b> {this.state.developer}</ListGroup.Item>
                                         <ListGroup.Item><b>Producteur : </b>{this.state.publisher}</ListGroup.Item>
@@ -116,6 +116,10 @@ class UpdateGame extends Component {
                                 </Row>
                                 <Row>
                                     <Col lg="12">
+                                        <Form.Group controlId="publishDate">
+                                            <Form.Label>Date de sortie</Form.Label>
+                                            <Form.Control valid="true" contentEditable="true" type="date" as="input" name="publishDate" value={this.state.publishDate} onChange={this.onChangeGameHandle} />
+                                        </Form.Group>
                                         <Form.Group controlId="resume">
                                             <Form.Label>Résume</Form.Label>
                                             <Form.Control as="textarea" rows={3} value={this.state.resume} onChange={this.onChangeGameHandle}/>

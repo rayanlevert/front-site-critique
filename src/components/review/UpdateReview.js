@@ -83,8 +83,8 @@ class UpdateReview extends Component {
 
     render() {
         return (
-            <div className="col-12 mt-5 mb-5">
-                <Card>
+            <>
+                <Card className="col-12">
                     <h2 className="mt-2">Modification de la critique</h2>
                     <Card.Body>
                     <Form>
@@ -106,7 +106,7 @@ class UpdateReview extends Component {
                     </Form>
                     </Card.Body>
                 </Card>
-            </div>
+            </>
         );
     }
 }
