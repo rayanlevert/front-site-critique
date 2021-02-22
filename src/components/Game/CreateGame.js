@@ -25,10 +25,10 @@ class CreateGame extends Component {
 
     _handleSubmit(e) {
         e.preventDefault();
-        /*const date = new Date();
+        const date = new Date();
         let reviewToJSON =  {
             title: this.state.title,
-            publishDate: date.toJSON(),
+            publishDate: this.state.publishDate,
             creationArticleDate: date.toJSON(),
             minAge: this.state.minAge,
             developer: this.state.developer,
@@ -48,7 +48,7 @@ class CreateGame extends Component {
             body: JSON.stringify(reviewToJSON)
         })
             .then(res => this.props.history.push('/listgame'))
-            .catch(err => alert("Erreur s'est produite lors de la création de votre critique, veuillez réesasayer"))*/
+            .catch(err => alert("Erreur s'est produite lors de la création de votre critique, veuillez réesasayer"))
 
     }
     
@@ -64,11 +64,18 @@ class CreateGame extends Component {
             imagePreviewUrl: reader.result
           });
         }
-    
+        if(!['image/jpeg', 'image/gif', 'image/png', 'image/svg+xml'].includes(file.type)) {
+            console.log('Only images are allowed.');
+            return;
+        }   
         reader.readAsDataURL(file)
+        if(file.size > 2 * 1024 * 1024) {
+            console.log('File must be less than 2MB.');
+            return;
+        }
         const data = new FormData();
         data.append('photo', file );
-        fetch("http://localhost:3000/ressources/img/article/game", {
+        fetch("http://localhost:3000/upload-image", {
              method: 'POST',
              headers: {
                  'Accept': 'application/json',
@@ -79,6 +86,7 @@ class CreateGame extends Component {
            console.log(response.text());
         })
         .catch(error => console.log(error))
+        
     }
 
     onChangeGameHandle = (e) => {
@@ -89,11 +97,7 @@ class CreateGame extends Component {
         console.log(this.state)
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
-        if (imagePreviewUrl) {
-          $imagePreview = (<img src={imagePreviewUrl} width="50%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article" />);
-        } else {
-          $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
-        }
+        $imagePreview = (<img onError={(e) => {e.target.src = '../../ressources/img/article/game/default.svg.png'; e.target.onError = null; e.target.width="300";}} src={imagePreviewUrl} width="50%" className="img-fluid" alt="image de l'affiche du jeux video de l'article" title="image de l'affiche du jeux video de l'article" />);
         return (
             <>
                  <Col lg="12">      
@@ -108,6 +112,7 @@ class CreateGame extends Component {
                                 <Col lg="7">
                                     <ListGroup>
                                         <ListGroup.Item><b>Min age : </b>{this.state.minAge}</ListGroup.Item>
+                                        <ListGroup.Item><b>Date de sortie : </b><FormattedDate date={this.state.publishDate} /></ListGroup.Item>
                                         <ListGroup.Item><b>Genre : </b>{this.state.genre}</ListGroup.Item>
                                         <ListGroup.Item><b>Developpeur : </b> {this.state.developer}</ListGroup.Item>
                                         <ListGroup.Item><b>Producteur : </b>{this.state.publisher}</ListGroup.Item>
@@ -154,6 +159,10 @@ class CreateGame extends Component {
                                 </Row>
                                 <Row>
                                     <Col lg="12">
+                                    <Form.Group controlId="publishDate">
+                                        <Form.Label>Date de sortie</Form.Label>
+                                        <Form.Control valid="true" contentEditable="true" type="date" as="input" name="publishDate" placeholder="01-01-1977"  onChange={this.onChangeGameHandle} />
+                                    </Form.Group>
                                         <Form.Group controlId="resume">
                                             <Form.Label>Résume</Form.Label>
                                             <Form.Control as="textarea" rows={3} value={this.state.resume} onChange={this.onChangeGameHandle}/>

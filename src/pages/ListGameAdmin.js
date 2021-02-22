@@ -70,7 +70,7 @@ export class ListGameAdmin extends Component {
                                     <tr>
                                         <th>#</th>
                                         <th>Titre</th>
-                                        <th>Date de publication</th>
+                                        <th>Date de création</th>
                                         <th>Review</th>
                                         <th>Update</th>
                                         <td>Supprimer</td>
@@ -81,7 +81,7 @@ export class ListGameAdmin extends Component {
                                     <tr key={game.id}>
                                         <td>{game.id}</td>
                                         <td>{game.title}</td>
-                                        <td><FormattedDate date={game.publishDate} /></td>
+                                        <td><FormattedDate date={game.creationArticleDate} /></td>
                                         <td><Button onClick={ () => this.listReview(game.id,game.title)} variant="outline-dark"><FontAwesomeIcon icon={faEye} ></FontAwesomeIcon></Button></td>
                                         <td><Button onClick={ () => this.editGame(game.id)} variant="outline-dark"><FontAwesomeIcon icon={faEdit} ></FontAwesomeIcon></Button></td>
                                         <td><Button onClick={ () => { if (window.confirm('Voulez-vous supprimer cette article ?')) this.deleteGame(game.id) }} variant="outline-danger"><FontAwesomeIcon icon={faTrashAlt} ></FontAwesomeIcon></Button></td>

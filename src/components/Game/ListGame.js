@@ -78,7 +78,7 @@ class ListGame extends Component {
                             return (
                                 <Col key={game.id} xs="12" sm="12" lg="4" className="d-flex">
                                     <Card  className="mt-2 flex-fill">       
-                                        <Image className="card-img-top img-fluid" style={styles.cardImage} src={`../ressources/img/article/game/${game.id}.jpg`}  fluid />
+                                        <Image onError={(e) => {e.target.src = '../../ressources/img/article/game/default.svg.png'; e.target.onError = null;}} className="card-img-top img-fluid" style={styles.cardImage} src={`../ressources/img/article/game/${game.id}.jpg`}  fluid />
                                         <Card.Body>
                                             <Card.Title>{game.title}</Card.Title>
                                                 <Card.Text style={styles.cardText}>
