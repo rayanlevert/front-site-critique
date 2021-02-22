@@ -94,9 +94,9 @@ class Movies extends Component
               <Row className="col-12 justify-content-around">
                { this.state.movie.map(movie=> 
                <Col className="col-auto m-5">
-               <div className="card" key={ movie.id }>
+               <div className="card movie-card" key={ movie.id }>
                 <img className="card-img-top img-movie" id={"img-"+movie.id} data-lazy={ this.getPoster(movie.title, movie.id) } />
-                <div className="card-body">
+                <div className="card-body movie-card-body">
                     <h6 className="card-title">{movie.title}</h6>
                     <small className="card-subtitle text-muted">{ new Date(movie.publishDate).toLocaleDateString() }</small>
                     <p className="card-text genres">{ movie.genre }</p>
