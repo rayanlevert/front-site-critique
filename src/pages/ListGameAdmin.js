@@ -1,7 +1,7 @@
 import { faEdit, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react'  
-import { Button, Container, Table } from 'react-bootstrap';
+import { Button, Card, Container, Table } from 'react-bootstrap';
 import { FormattedDate } from '../components/Date/FormattedDate';
 import Pagination from '../components/pagination/Pagination';
 
@@ -62,33 +62,35 @@ export class ListGameAdmin extends Component {
              return ( 
                     <> 
                     <Container fluid>
+                        <Card className="col-12 mt-4">
                         <h2>Liste des articles (Game)</h2>
-                        <Button variant="outline-success m-2" className="float-right" onClick={ () => this.createGame()}><FontAwesomeIcon icon={faEdit}/>Rédiger une article</Button>
-                        <Table striped bordered hover className="mt-3">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Titre</th>
-                                    <th>Date de publication</th>
-                                    <th>Review</th>
-                                    <th>Update</th>
-                                    <td>Supprimer</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentPosts.map( game => 
-                                <tr key={game.id}>
-                                    <td>{game.id}</td>
-                                    <td>{game.title}</td>
-                                    <td><FormattedDate date={game.publishDate} /></td>
-                                    <td><Button onClick={ () => this.listReview(game.id,game.title)} variant="outline-dark"><FontAwesomeIcon icon={faEye} ></FontAwesomeIcon></Button></td>
-                                    <td><Button onClick={ () => this.editGame(game.id)} variant="outline-dark"><FontAwesomeIcon icon={faEdit} ></FontAwesomeIcon></Button></td>
-                                    <td><Button onClick={ () => { if (window.confirm('Voulez-vous supprimer cette article ?')) this.deleteGame(game.id) }} variant="outline-danger"><FontAwesomeIcon icon={faTrashAlt} ></FontAwesomeIcon></Button></td>
-                                </tr>
-                                )}
-                            </tbody>
-                            </Table>
-                            <Pagination indexOfLastPost={indexOfLastPost} indexOfFirstPost={indexOfFirstPost} postsPerPage={postsPerPage} totalPosts={games.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
+                        <Button variant="outline-success m-2" className="float-right" onClick={ () => this.createGame()}><FontAwesomeIcon icon={faEdit}/>Rédiger une fiche (game)</Button>
+                            <Table striped bordered hover className="mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Titre</th>
+                                        <th>Date de publication</th>
+                                        <th>Review</th>
+                                        <th>Update</th>
+                                        <td>Supprimer</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentPosts.map( game => 
+                                    <tr key={game.id}>
+                                        <td>{game.id}</td>
+                                        <td>{game.title}</td>
+                                        <td><FormattedDate date={game.publishDate} /></td>
+                                        <td><Button onClick={ () => this.listReview(game.id,game.title)} variant="outline-dark"><FontAwesomeIcon icon={faEye} ></FontAwesomeIcon></Button></td>
+                                        <td><Button onClick={ () => this.editGame(game.id)} variant="outline-dark"><FontAwesomeIcon icon={faEdit} ></FontAwesomeIcon></Button></td>
+                                        <td><Button onClick={ () => { if (window.confirm('Voulez-vous supprimer cette article ?')) this.deleteGame(game.id) }} variant="outline-danger"><FontAwesomeIcon icon={faTrashAlt} ></FontAwesomeIcon></Button></td>
+                                    </tr>
+                                    )}
+                                </tbody>
+                                </Table>
+                                <Pagination indexOfLastPost={indexOfLastPost} indexOfFirstPost={indexOfFirstPost} postsPerPage={postsPerPage} totalPosts={games.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
+                            </Card>
                         </Container>
                     </>
                     )  

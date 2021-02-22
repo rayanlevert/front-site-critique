@@ -3,7 +3,7 @@ import { Card, ListGroup,Button, Row, Col } from 'react-bootstrap';
 import { FormattedDate } from '../Date/FormattedDate';
 import Review from '../review/Review';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { withRouter,useParams, Redirect  } from 'react-router-dom';
 
 class Game extends Component {
@@ -48,9 +48,9 @@ class Game extends Component {
     render() {
         return (
             <> 
-            <Row>
                 <Col>      
-                <Card className="m-5">
+                <Card className="col-12 mt-4">
+                    <a className="ml-4 mt-3 text-left" href="/article/game"><FontAwesomeIcon icon={faArrowLeft} /> Retour</a>
                     <Card.Body>
                         <h2>{this.state.games.title}</h2>
                         <Row className="mt-3">
@@ -61,6 +61,7 @@ class Game extends Component {
                                     <ListGroup>
                                         <ListGroup.Item><b>Min age : </b>{this.state.games.minAge}</ListGroup.Item>
                                         <ListGroup.Item><b>Genre : </b>{this.state.games.genre}</ListGroup.Item>
+                                        <ListGroup.Item><b>Date de sortie : </b><FormattedDate date={this.state.games.publishDate}/></ListGroup.Item>
                                         <ListGroup.Item><b>Developpeur : </b> {this.state.games.developer}</ListGroup.Item>
                                         <ListGroup.Item><b>Producteur : </b>{this.state.games.publisher}</ListGroup.Item>
                                         <ListGroup.Item><b>Plateforme : </b>{this.state.games.platform}</ListGroup.Item>
@@ -86,8 +87,6 @@ class Game extends Component {
                     </Card.Body>
                 </Card>
                 </Col>
-                </Row>
-
             </>
         );
     }

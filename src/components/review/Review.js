@@ -4,12 +4,17 @@ import React, { Component } from 'react';
 import { Media,Dropdown } from 'react-bootstrap';
 import { FormattedDateWithTime } from '../Date/FormattedDate';
 import { withRouter } from "react-router-dom";
+import Pagination from '../pagination/Pagination';
  
 class Review extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {reviews: [], user: [ ]};
+        this.state = {reviews: [],
+             user: [ ],
+             currentPage: 1,
+             postsPerPage: 5
+            };
         this.deleteReview = this.deleteReview.bind(this);
         this.editReview = this.editReview.bind(this);
 
@@ -45,12 +50,21 @@ class Review extends Component {
     }
 
     render() {
-        
+        const { currentPage, postsPerPage,reviews } = this.state;
+        const indexOfLastPost = currentPage * postsPerPage;
+        const indexOfFirstPost = indexOfLastPost - postsPerPage;
+        const currentPosts = reviews.slice(indexOfFirstPost, indexOfLastPost);
+    
+        const paginate = pageNum => this.setState({ currentPage: pageNum });
+    
+        const nextPage = () => this.setState({ currentPage: currentPage + 1 });
+    
+        const prevPage = () => this.setState({ currentPage: currentPage - 1 });
         return (
             <>
                  {(this.state.reviews.length !== 0 ? (
                 
-                    this.state.reviews.map( review => (
+                    currentPosts.map( review => (
                         <div key={review.idReview} className="col-12 mt-4">
                             { this.state.user !== null ? ( review.userId === this.state.user.userId ? (
                                 <Dropdown className="float-right">
@@ -72,10 +86,13 @@ class Review extends Component {
                                 </div>
                             </div>
                         </div>
-                    ))
+                        )
+                   
+                    )
                     ) : (
                     <p>Aucune critique est disponnible pour cette page.</p>
                     ) )}
+                     <Pagination indexOfLastPost={indexOfLastPost} indexOfFirstPost={indexOfFirstPost} postsPerPage={postsPerPage} totalPosts={reviews.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
             </>
         );
     } 
