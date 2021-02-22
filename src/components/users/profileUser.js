@@ -4,17 +4,18 @@ import { useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
-import { update } from "../../redux/actions/actionCreatorUserAuth";
+import { remove, update } from "../../redux/actions/actionCreatorUserAuth";
 import "../../web/css/users/index.css";
 import roleToString from "../Role/roleToString";
 import Role from "./Role";
 
-export function ProfileUser({ update_user }) {
-    const ROLES = ["ROLE_USER", "ROLE_ADMIN"];
+export function ProfileUser({ update_user, remove_user }) {
+    let ROLES = ["ROLE_USER", "ROLE_ADMIN"];
 
-    const { id } = useParams();
+    const { id } = useParams(); 
     const [user, setUser] = useState({});
     const userAuth = useSelector(state => state.userAuth);
+    const [roles, setRoles] = useState(["ROLE_USER", "ROLE_ADMIN"]);
 
     const [openPassword, isOpenPassword] = useState(false);
     const [password, setPassword] = useState({ rawPassword: '', encodedPassword: '' });
@@ -36,17 +37,20 @@ export function ProfileUser({ update_user }) {
     const handleCloseDelete = () => isOpenDelete(false);
     const handleOpenDelete = () => isOpenDelete(true);
 
-
     useEffect(() => {
         
         if (userAuth.userId !== user.id || !userAuth.roles.includes("ROLE_ADMIN")) {
             <Redirect to="/"></Redirect>
         }
+
+        if (!userAuth.roles.some( role => role.name === "ROLE_ADMIN")) {
+            let array = ROLES.slice(0,1);
+            setRoles(array);
+        }
         
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => {
                 response.json().then(user => {
-                    console.log(user);
                     setUser(user);
                     setPassword({ ...password, encodedPassword: user.password })
                 })
@@ -200,7 +204,7 @@ export function ProfileUser({ update_user }) {
                         <hr class="solid"></hr>
                         <Form.Group controlId="roles">
                             {
-                                ROLES.map((role) => <Form.Check onChange={onChangeRoles} custom type="checkbox" id={role} label={roleToString(role)} checked={checkRole(role)} required />)
+                                roles.map((role) => <Form.Check onChange={onChangeRoles} custom type="checkbox" id={role} label={roleToString(role)} checked={checkRole(role)} required hidden/>)
                             }
                         </Form.Group>
                     </Col>
@@ -259,7 +263,10 @@ export function ProfileUser({ update_user }) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { update_user: (userUpdated) => dispatch(update(userUpdated)) }
+    return { 
+        update_user: (userUpdated) => dispatch(update(userUpdated)),
+        remove_user: (userRemoved) => dispatch(remove(userRemoved))
+    }
 }
 
 export default connect(null, mapDispatchToProps)(ProfileUser)

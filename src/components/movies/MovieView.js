@@ -134,7 +134,7 @@ render() {
                         </Row>
                         <Row>
                             <Col  md={{ span: 2, offset: 10 }} className="text-right">
-                            <small>Pubier le <FormattedDate date={movie.creationArticleDate}/></small>
+                            <small>Publié le <FormattedDate date={movie.creationArticleDate}/></small>
                             </Col>
                         </Row>  
                     <div className="row">

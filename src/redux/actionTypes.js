@@ -4,6 +4,7 @@ export const LOGIN = 'login';
 export const LOGOUT = 'logout';
 export const SIGNIN = 'signin';
 export const UPDATE = 'update';
+export const REMOVE = 'remove';
 
 
 export const LOAD_MOVIES_PAGE = 'load_movies_page';

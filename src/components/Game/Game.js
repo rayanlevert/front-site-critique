@@ -71,7 +71,7 @@ class Game extends Component {
                             </Row>
                             <Row>
                                 <Col  md={{ span: 2, offset: 10 }} className="text-right">
-                                <small>Pubier le <FormattedDate date={this.state.games.publishDate}/></small>
+                                <small>Publié le <FormattedDate date={this.state.games.publishDate}/></small>
                                 </Col>
                             </Row>  
                         <div className="row">
