@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import UpdateMovie from "./UpdateMovie";
 import Review from '../review/Review';
 import { FormattedDate } from '../Date/FormattedDate';
+import { connect } from 'react-redux';
 
 
     
@@ -16,8 +17,10 @@ import { FormattedDate } from '../Date/FormattedDate';
 class MovieView extends Component{    
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = { movie: [], redirectError: false, user:[], show: false };
         this.createdReview = this.createdReview.bind(this);
+        const user = props.user;
     }
 
     
@@ -69,29 +72,45 @@ render() {
         } 
     const toggleClose = () => {
             this.setState({ show : false })
-        } 
+        }
+    const isAdmin = () =>{
+        console.log("fonction ISADMIN");
+        console.log(this.props.user);
+        try{
+            if(this.props.userAuth.isLogged === true && this.props.userAuth.roles !== undefined)
+            {
+                if(this.props.userAuth.roles[0].name == "ROLE_ADMIN")
+                {
+                    return(<>
+                        <Button size="lg" onClick={ toggleOpen }>Editer</Button>
+                        <Modal size="lg" id="formModal"  show={this.state.show} onHide={ toggleClose }>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Ajouter un nouveau film</Modal.Title>
+                        </Modal.Header>
+        
+                        <Modal.Body>
+                            <UpdateMovie movieEdit={movie} />
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <Row className="col-12 justify-content-around p-4">
+                                <Button onClick={toggleClose} className="btn-warning col-3">Annuler</Button></Row>
+                                    <Alert>
+                                        <Alert.Link></Alert.Link>
+                                    </Alert>
+                        </Modal.Footer>
+                        </Modal>
+        </>);
+                }
+            }
+                
+            }
+            finally{}
+    };
     return (
         <> 
-        <Button size="lg" onClick={ toggleOpen }>Editer</Button>
-        <Modal size="lg" id="formModal"  show={this.state.show} onHide={ toggleClose }>
-            <Modal.Header closeButton>
-                <Modal.Title>Ajouter un nouveau film</Modal.Title>
-            </Modal.Header>
+        {isAdmin()}
         
-            <Modal.Body>
-                <UpdateMovie movieEdit={movie} />
-            </Modal.Body>
-
-            <Modal.Footer>
-                <Row className="col-12 justify-content-around p-4">
-                    <Button onClick={toggleClose} className="btn-warning col-3">Annuler</Button></Row>
-                <Alert>
-                    <Alert.Link></Alert.Link>
-                </Alert>
-            </Modal.Footer>
-        
-            
-        </Modal>
         <Row className="col-12 align-self-center">
             <Col>      
             <Card className="col-12">
@@ -140,4 +159,7 @@ render() {
 }
     
 }
-export default withRouter(MovieView);
+const mapStateToProps = state =>({
+    ...state
+});
+export default withRouter(connect(mapStateToProps)(MovieView));

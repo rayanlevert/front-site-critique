@@ -34,6 +34,27 @@ const mapStateToProps = state => ({
         
   });
 
+
+  const isAdmin = (props) =>{
+    console.log("fonction ISADMIN");
+    try{
+        if(props.userAuth.isLogged === true && props.userAuth.roles !== undefined)
+        {
+          if(props.userAuth.roles[0].name == "ROLE_ADMIN")
+          {
+            console.log('coucou');
+            return(
+            <div className="modalForm">
+              <CreateMovie/>
+              </div> 
+          );
+          }
+        }
+        
+      }
+      finally{} 
+  }
+
   const deleteMovie =(e)=>
       {
         let movieId = e.target.getAttribute("data-id");
@@ -52,8 +73,8 @@ class Movies extends Component
         this.state = {
             movie: []
         }
-        console.log("this.state à la fin de constructor(props)");
-        console.log(this.state);
+        console.log("this.props à la fin de constructor(props)");
+        console.log(props);
         
     }
 
@@ -88,9 +109,9 @@ class Movies extends Component
       
       render = () => {
           return (<>
-            <div className="modalForm">
-            <CreateMovie/>
-            </div>
+       
+            {isAdmin(this.props)}        
+            
               <Row className="col-12 justify-content-around">
                { this.state.movie.map(movie=> 
                <Col className="col-auto m-5">
