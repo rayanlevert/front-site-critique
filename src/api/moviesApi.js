@@ -1,5 +1,6 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
+import request from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'http://localhost:8080/';
@@ -31,7 +32,8 @@ const Movies = {
     'Accept' : 'application/json',
   'Content-Type' : 'application/json'
   }),
-  findOneById : (id) => requests.get(`api/movies/${encode(id)}`),
+  delete: id => requests.del(`api/movies/${id}`),
+  findOneById : id => requests.get(`api/movies/${encode(id)}`),
 };
 export default {
     Movies,

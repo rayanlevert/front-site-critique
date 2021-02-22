@@ -1,7 +1,7 @@
 import {React,Component} from 'react';
 import { connect } from 'react-redux';
 import CreateMovie from './CreateMovie';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import{
     LOAD_MOVIES_CREATE,
@@ -11,6 +11,10 @@ import{
 import {movie_view_page_load} from "../../redux/actions/movies/actionMovies";
 import agent from "../../api/moviesApi";
 import '../../web/css/movies/Movies.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee,faMinusCircle, fas } from '@fortawesome/free-solid-svg-icons';
+
 const mapStateToProps = state => ({
     ...state
   });
@@ -29,6 +33,15 @@ const mapStateToProps = state => ({
    movie_view_page_load: () => dispatch(movie_view_page_load(ownProps))
         
   });
+
+  const deleteMovie =(e)=>
+      {
+        let movieId = e.target.getAttribute("data-id");
+        agent.Movies.delete(movieId).then(res =>{
+          console.log("film supprimé "+movieId);
+          console.log(res);
+        });
+      };
   
 class Movies extends Component
 {
@@ -71,6 +84,8 @@ class Movies extends Component
           this.setState({movie : res});
         }));
       }
+
+      
       render = () => {
           return (<>
             <div className="modalForm">
@@ -87,6 +102,9 @@ class Movies extends Component
                     <p className="card-text genres">{ movie.genre }</p>
                     <p className="card-deck justify-content-around  text-black-50">A partir de {movie.minAge} ans</p>
                     <Link className="btn" to={`/movie/view/${movie.id}`} >VOIR LA FICHE</Link>
+                    <div className="m-3 border-top p-3">
+                    <Button className="btn-danger" data-id={movie.id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
+                    </div>
                 </div>
                 </div>
                </Col>
