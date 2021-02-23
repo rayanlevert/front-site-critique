@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNIN, UPDATE } from "../actionTypes";
+import { LOGIN, LOGOUT, REMOVE, SIGNIN, UPDATE } from "../actionTypes";
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -27,6 +27,11 @@ const reducer = (state = initialState, action) => {
             const userUpdated = action.payload;
             userAuth = {username: userUpdated.username, password:'', isLogged: true, userId: userUpdated.id, roles: userUpdated.roles};
             localStorage.setItem('user', JSON.stringify(userAuth));
+            return userAuth;
+
+        case REMOVE:
+            localStorage.removeItem('user');
+            userAuth = {username: '', password: '', isLogged: false, userId: 0 }
             return userAuth;
             
         default:

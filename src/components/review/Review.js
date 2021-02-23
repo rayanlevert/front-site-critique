@@ -82,7 +82,7 @@ class Review extends Component {
                                 <div className="media-body">
                                         <h5>{ review.titleReview }</h5>
                                     <p className="text-left">{ review.contentReview }</p>
-                                    <small className="float-left">Note de la critique : { review.noteReview }</small><small className="float-right">Créer par { review.userUsername } le <FormattedDateWithTime date={ review.publishDate } /></small>
+                                    <small className="float-left">Note de la critique : { review.noteReview }</small><small className="float-right">Créé par { review.userUsername } le <FormattedDateWithTime date={ review.publishDate } /></small>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ class Review extends Component {
                    
                     )
                     ) : (
-                    <p>Aucune critique est disponnible pour cette page.</p>
+                    <p>Aucune critique est disponible pour cette page.</p>
                     ) )}
                      <Pagination indexOfLastPost={indexOfLastPost} indexOfFirstPost={indexOfFirstPost} postsPerPage={postsPerPage} totalPosts={reviews.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />
             </>
