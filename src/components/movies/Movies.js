@@ -35,25 +35,6 @@ const mapStateToProps = state => ({
   });
 
 
-  const isAdmin = (props) =>{
-    console.log("fonction ISADMIN");
-    try{
-        if(props.userAuth.isLogged === true && props.userAuth.roles !== undefined)
-        {
-          if(props.userAuth.roles[0].name == "ROLE_ADMIN")
-          {
-            console.log('coucou');
-            return(
-            <div className="modalForm">
-              <CreateMovie/>
-              </div> 
-          );
-          }
-        }
-        
-      }
-      finally{} 
-  }
 
   const deleteMovie =(e)=>
       {
@@ -77,6 +58,8 @@ class Movies extends Component
         console.log(props);
         
     }
+
+
 
       //détruira proprement les données du composant afin d'alléger le site et optimiser la navigation - A FAIRE PLUS TARD
       componentWillUnmount() { 
@@ -106,11 +89,50 @@ class Movies extends Component
         }));
       }
 
+
+      isAdmin(){
+        try{
+            if(this.props.userAuth.isLogged === true && this.props.userAuth.roles !== undefined)
+            {
+              if(this.props.userAuth.roles[0].name == "ROLE_ADMIN")
+              {
+                return true;
+              }
+              else{
+                return false;
+              }
+            }
+            
+          }
+          finally{} 
+      }
+      adminCreateForm()
+      {
+        if(this.isAdmin())
+        {
+          return(
+            <div id="admin-create-movie-btn" className="modalForm">
+                  <CreateMovie/>
+                  </div> 
+          );
+        }
+      }
+      adminDeleteForm(id){
+        if(this.isAdmin())
+        {
+          return(
+            <div className="m-3 border-top p-3">
+            <Button className="btn-danger" data-id={id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
+            </div>
+          );
+        }
+      }
+
       
       render = () => {
           return (<>
        
-            {isAdmin(this.props)}        
+            {this.adminCreateForm()}        
             
               <Row className="col-12 justify-content-around">
                { this.state.movie.map(movie=> 
@@ -123,9 +145,8 @@ class Movies extends Component
                     <p className="card-text genres">{ movie.genre }</p>
                     <p className="card-deck justify-content-around  text-black-50">A partir de {movie.minAge} ans</p>
                     <Link className="btn" to={`/movie/view/${movie.id}`} >VOIR LA FICHE</Link>
-                    <div className="m-3 border-top p-3">
-                    <Button className="btn-danger" data-id={movie.id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
-                    </div>
+                    
+                    { this.adminDeleteForm(movie.id) }
                 </div>
                 </div>
                </Col>

@@ -18,3 +18,7 @@
     color: #aa1417;
     scale: 1.01;
 }
+#admin-create-movie-btn{
+    position : fixed; bottom: 5px; right: 5px;
+    display: block;
+}

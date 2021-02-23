@@ -3,7 +3,7 @@ import '../../web/css/movies/MoviesView.css';
 import agent from "../../api/moviesApi";
 import { Card, ListGroup,Button, Row, Col, Modal, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, fas, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
 import UpdateMovie from "./UpdateMovie";
 import Review from '../review/Review';
@@ -81,40 +81,52 @@ render() {
             {
                 if(this.props.userAuth.roles[0].name == "ROLE_ADMIN")
                 {
-                    return(<>
-                        <Button size="lg" onClick={ toggleOpen }>Editer</Button>
-                        <Modal size="lg" id="formModal"  show={this.state.show} onHide={ toggleClose }>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Ajouter un nouveau film</Modal.Title>
-                        </Modal.Header>
-        
-                        <Modal.Body>
-                            <UpdateMovie movieEdit={movie} />
-                        </Modal.Body>
-
-                        <Modal.Footer>
-                            <Row className="col-12 justify-content-around p-4">
-                                <Button onClick={toggleClose} className="btn-warning col-3">Annuler</Button></Row>
-                                    <Alert>
-                                        <Alert.Link></Alert.Link>
-                                    </Alert>
-                        </Modal.Footer>
-                        </Modal>
-        </>);
+                    return true;
+                }
+                else{
+                    return false;
                 }
             }
                 
             }
             finally{}
     };
+    const editAdmForm = () =>{
+        if(isAdmin())
+        {
+            return(
+         <>
+        <Button size="lg" onClick={ toggleOpen } className="btn-primary rounded-circle"><FontAwesomeIcon icon={faPencilAlt} /></Button>
+            <Modal size="lg" id="formModal"  show={this.state.show} onHide={ toggleClose }>
+                <Modal.Header closeButton>
+                    <Modal.Title>Ajouter un nouveau film</Modal.Title>
+                </Modal.Header>
+        
+                <Modal.Body>
+                    <UpdateMovie movieEdit={movie} />
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Row className="col-12 justify-content-around p-4">
+                    <Button onClick={toggleClose} className="btn-warning col-3">Annuler</Button></Row>
+                    <Alert>
+                        <Alert.Link></Alert.Link>
+                    </Alert>
+                </Modal.Footer>
+            </Modal></>   ); 
+        }
+        
+    }
     return (
-        <> 
-        {isAdmin()}
+        <>
         
         <Row className="col-12 align-self-center">
             <Col>      
             <Card className="col-12">
                 <Card.Body>
+                <div id="admin-update-movie-btn">
+                    {editAdmForm()}
+                </div>
                     <h2>{movie.title}</h2>
                     <Row className="mt-3">
                             <Col lg="5" >

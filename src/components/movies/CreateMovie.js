@@ -8,6 +8,8 @@ import {
 import { connect } from "react-redux";
 import agent from "../../api/moviesApi";
 import { Alert } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 function CreateMovie()
 {
     //accès store
@@ -58,7 +60,7 @@ function CreateMovie()
 
     return(
         <>
-        <Button size="lg" onClick={ toggleOpen }>Ajouter un film</Button>
+        <Button size="lg" onClick={ toggleOpen } className="btn-primary rounded-circle"><FontAwesomeIcon icon={faPlus} /></Button>
         <Modal size="lg" show={show} onHide={toggleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Ajouter un nouveau film</Modal.Title>
