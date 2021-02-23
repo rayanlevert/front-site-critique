@@ -88,7 +88,6 @@ export function ProfileUser({ update_user, remove_user }) {
 
     const displayAlert = (variant, message, id) => {
         setVariant(variant);
-        console.log(id);
 
         switch (id) {
             case "alertDelete":

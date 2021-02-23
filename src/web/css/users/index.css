@@ -32,3 +32,7 @@ hr.solid {
 .pagination {
     justify-content: 0 !important;
 }
+
+.formDesCatch {
+    padding-left: 5rem;
+}
