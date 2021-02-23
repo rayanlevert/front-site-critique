@@ -1,5 +1,6 @@
 import { Modal, Button, Row } from "react-bootstrap";
 import MovieForm from "./MovieForm";
+import "../../web/css/movies/Movies.css";
 import { useState, React } from "react";
 import { useSelector } from "react-redux";
 import { 
@@ -60,7 +61,8 @@ function CreateMovie()
 
     return(
         <>
-        <Button size="lg" onClick={ toggleOpen } className="btn-primary rounded-circle"><FontAwesomeIcon icon={faPlus} /></Button>
+        
+        <Button size="lg" onClick={ toggleOpen } className="btn rounded-circle" size="lg"><FontAwesomeIcon icon={faPlus} /></Button>
         <Modal size="lg" show={show} onHide={toggleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Ajouter un nouveau film</Modal.Title>
