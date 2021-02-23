@@ -132,7 +132,7 @@ class HomeIndex extends Component{
                 <h4 className="col-12">Pour passer un bon moment en famille</h4>
                 <Col className="col-6 m-1">
                <div className="card movie-card-comedy position-relative" key={ movieComedy.id }>
-                   <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" size="xl" /></span>
+                   <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" /></span>
                 <img className="card-img-top img-movie-home" id={"img-movieComedy-"+movieComedy.id} data-lazy={ this.getPoster(movieComedy.title, movieComedy.id) } />
                 <div className="card-body movie-card-body" id="movie-card-body">
                     <h6 className="card-title-home">{movieComedy.title}</h6>
@@ -144,11 +144,6 @@ class HomeIndex extends Component{
                </Col>
             </section>
             </Row>
-           
-            {
-                games.map(game => <p>{game.title}</p>)
-            }
-
             </div>
             </>
         )
