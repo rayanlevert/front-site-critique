@@ -113,8 +113,6 @@ export function ProfileUser({ update_user, remove_user }) {
                 setRedirect(true);
             } else setVisibleSave(false);
         }, 1500);
-
-
     }
 
     const handleSubmitPasswordVerif = (e) => {
@@ -147,15 +145,6 @@ export function ProfileUser({ update_user, remove_user }) {
         }
         console.log(url);
         return url;
-    }
-
-    const getLinkUpdate = (review) => {
-        let url = '';
-
-        switch (review.article.discriminator) {
-            case 'game':
-                url = "/a"
-        }
     }
 
     const onChangePasswordVerif = (e) => {
@@ -290,7 +279,7 @@ export function ProfileUser({ update_user, remove_user }) {
                             )
                             )
                         ) : (
-                                <p>Aucune critique est disponible pour cette page.</p>
+                                    <p>{user.id !== userAuth.userId ? 'Cet utilisateur n\'a créé aucune critique.' : 'Vous n\'avez créé aucune critique.'}</p>
                             ))}
                     </Col>
                 </Row>
@@ -335,10 +324,6 @@ export function ProfileUser({ update_user, remove_user }) {
                     <Button variant="danger" onClick={handleSubmitDelete}>Supprimer</Button>
                 </Modal.Footer>
             </Modal>
-
-
-
-
 
             { redirect && <Redirect to="/"></Redirect>}
         </>

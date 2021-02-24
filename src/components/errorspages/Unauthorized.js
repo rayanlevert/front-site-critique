@@ -6,7 +6,7 @@ export default function Unauthorized() {
 
     return (
         <>
-            <h2><FontAwesomeIcon color="yellow" icon={faExclamationTriangle}></FontAwesomeIcon>401 - Unauthorized</h2>
+            <h2><FontAwesomeIcon color="yellow" icon={faExclamationTriangle}></FontAwesomeIcon> 401 - Unauthorized</h2>
             <p>
                 Vous n'avez pas les permissions pour accèder à cette page.<br />
                 <small>Veuillez contacter l'administrateur pour plus de renseignements.</small>

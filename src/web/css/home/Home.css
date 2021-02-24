@@ -1,3 +1,5 @@
+@font-face { font-family: Mania; src: url(../mania.ttf);}
+
 #home-body{
     background : linear-gradient(#bebdbd, #ededed);
 }

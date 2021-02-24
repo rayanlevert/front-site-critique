@@ -86,15 +86,15 @@ class HomeIndex extends Component{
         console.log("this.state.articles.movies",movies)
         
         return(
-            <>
+            <>  
             <div id="home-body">
-            <h1 id="home-main-title" className="block"><FontAwesomeIcon icon={faPlayCircle} className="align-bottom" /> Bienvenue sur CritiquesMania !<br />
+            <h1 id="home-main-title" className="block"><FontAwesomeIcon icon={faPlayCircle} className="align-bottom" /> Bienvenue sur <span style={{fontFamily: "Mania"}}>CritiquesMania</span> !<br />
             <small className="text-muted inline" id="small-home-main-title">La communauté multimédia sérieuse, fun et surtout totalement gratuite</small>
             </h1>
 
             <Row className="col-12 d-flex">
             <section id="home-movies" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faFilm} />Films récemment ajoutés</h4>
+            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faFilm} /> Films récemment ajoutés</h4>
 
             {   movies.map(movie =>                 
                 <Col className="col-3 ">
@@ -112,7 +112,7 @@ class HomeIndex extends Component{
             }
             </section>
             <section id="home-games" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faGamepad} />Jeux vidéos récemment ajoutés</h4>
+            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faGamepad} /> Jeux vidéo récemment ajoutés</h4>
             {   games.map(game =>                 
                 <Col className="col-3 m-1">
                <div className="card movie-card-home" key={ game.id }>
@@ -128,8 +128,9 @@ class HomeIndex extends Component{
                 )
             } 
             </section>
-            <section className="col-6 row justify-content-center">
-                <h4 className="col-12"><FontAwesomeIcon icon={faGlassCheers} />Pour passer un bon moment en famille</h4>
+
+            <section className="col-6 row justify-content-center" style={{paddingTop: "2rem"}}>
+                <h4 className="col-12"><FontAwesomeIcon icon={faGlassCheers} /> Pour passer un bon moment en famille</h4>
                 <Col className="col-6 m-1">
                <div className="card movie-card-comedy position-relative" key={ movieComedy.id }>
                    <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" /></span>
