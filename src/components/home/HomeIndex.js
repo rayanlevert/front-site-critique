@@ -7,7 +7,7 @@ import { LOAD_HOME_PAGE } from "../../redux/actionTypes";
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee,faFilm,faGamepad,faGlassCheers,faMinusCircle, faPlayCircle, fas } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faCoffee,faFilm,faGamepad,faGlassCheers,faMinusCircle, faNewspaper, faPlayCircle, fas, faScroll } from '@fortawesome/free-solid-svg-icons';
 import "../../web/css/home/Home.css";
 const getArticles = (page,size) => {
     
@@ -22,8 +22,12 @@ class HomeIndex extends Component{
         super(props);
         this.state = {
             articles : [],
-            movieComedy : []
+            movieComedy : [],
+            milesGame : [],
+            user: [],
         }
+        const user = props.user;
+
     }
     
     async componentDidMount(){
@@ -50,6 +54,12 @@ class HomeIndex extends Component{
             let res = await response.json();
             console.log(res);
             this.setState({ movieComedy : res });
+        });
+        let gameToSearch = "Marvel's Spider-Man : Miles Morales"
+        fetch('http://localhost:8080/api/game/byTitle/'+gameToSearch).then(async response => {
+            let res = await response.json();
+            console.log(res);
+            this.setState({ milesGame : res });
         }); 
     }
 
@@ -78,10 +88,22 @@ class HomeIndex extends Component{
             });
     };
 
+    
+    createdReview = (id,title) => {
+        this.props.history.push({
+            pathname : '/create-review',
+            state :{
+            articleId : id,
+            articleTitle : title,
+            genre: "movie",
+            userId: this.state.user.userId
+            }});
+    }
     render(){
         let movies = this.state.articles.movies || [];
         let games = this.state.articles.games || [];
         let movieComedy = this.state.movieComedy[0] || [];
+        let milesGame = this.state.milesGame || [];
         console.log(games);
         console.log("this.state.articles.movies",movies)
         
@@ -94,7 +116,7 @@ class HomeIndex extends Component{
 
             <Row className="col-12 d-flex">
             <section id="home-movies" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faFilm} />Films récemment ajoutés</h4>
+            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faFilm} />  Films récemment ajoutés</h4>
 
             {   movies.map(movie =>                 
                 <Col className="col-3 ">
@@ -112,7 +134,7 @@ class HomeIndex extends Component{
             }
             </section>
             <section id="home-games" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faGamepad} />Jeux vidéos récemment ajoutés</h4>
+            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faGamepad} />  Jeux vidéos récemment ajoutés</h4>
             {   games.map(game =>                 
                 <Col className="col-3 m-1">
                <div className="card movie-card-home" key={ game.id }>
@@ -129,7 +151,7 @@ class HomeIndex extends Component{
             } 
             </section>
             <section className="col-6 row justify-content-center">
-                <h4 className="col-12"><FontAwesomeIcon icon={faGlassCheers} />Pour passer un bon moment en famille</h4>
+                <h4 className="col-12"><FontAwesomeIcon icon={faGlassCheers} />  Pour passer un bon moment en famille</h4>
                 <Col className="col-6 m-1">
                <div className="card movie-card-comedy position-relative" key={ movieComedy.id }>
                    <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" /></span>
@@ -143,7 +165,41 @@ class HomeIndex extends Component{
                 </div>
                </Col>
             </section>
+
+            <section className="col-6 row justify-content-center">
+                <h4 className="col-12"><FontAwesomeIcon icon={faNewspaper} />  Votre avis nous intéresse</h4>
+                <Col className="col-6 m-1">
+               <div className="card movie-card-comedy position-relative" key={ milesGame.id }>
+                   <span className="badge-home-cat"><FontAwesomeIcon icon={faBook} color="darkred" /></span>
+                <img className="card-img-top img-movie-home" id={"img-milesGame-"+milesGame.id} src={`../ressources/img/article/game/${milesGame.id}.jpg`} />
+                <div className="card-body movie-card-body" id="movie-card-body">
+                    <h6 className="card-title-home">{milesGame.title}</h6>
+                    <small className="card-subtitle text-muted">{ new Date(milesGame.publishDate).toLocaleDateString() }</small>
+                    <p className="card-text genres">{ milesGame.realisator }</p>
+                    <Button id="view-movie" className="btn" onClick={() => this.createdReview(milesGame.id, milesGame.title)} >Laisser un avis</Button>
+                </div>
+                </div>
+               </Col>
+            </section>
             </Row>
+
+            <section id="best-games">
+                <h4>Les jeux les plus populaires en ce moment</h4>
+                <Row className="col-12 justify-content-around">
+                    <div className="col-4">
+                        <h6>Marvel's Spider-Man : Miles Morales</h6>
+                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/gBxBdZwok6E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div className="col-4">
+                        <h6>Call of Duty : Cold War</h6>
+                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/rKRqh7aVRFU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div className="col-4">
+                        <h6>Hitman 3</h6>
+                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/l8dTnM9TRuo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </Row>
+            </section>
             </div>
             </>
         )
@@ -160,4 +216,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         return dispatch({ type: LOAD_HOME_PAGE, payload });
     },        
   });
-export default withRouter(connect(null,mapDispatchToProps)(HomeIndex))
+  const mapStateToProps = state => ({
+    ...state
+  });
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(HomeIndex))
