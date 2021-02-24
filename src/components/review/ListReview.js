@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { Media,Dropdown, Container, Button, Table, Card } from 'react-bootstrap';
 import { FormattedDate, FormattedDateWithTime } from '../Date/FormattedDate';
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Pagination from '../pagination/Pagination';
  
 class ListReview extends Component {
@@ -78,7 +78,7 @@ class ListReview extends Component {
                                     <td>{review.contentReview}</td>
                                     <td><FormattedDate date={review.publishDate}  /></td>
                                     <td>{review.articleTitle}</td>
-                                    <td>{review.userUsername}<br /><small>(id :{review.userId})</small></td>
+                                    <td><Link to={`/profil/${review.userUsername}`}>{review.userUsername}</Link><br /><small>(id :{review.userId})</small></td>
                                     <td><Button variant="danger" onClick={() => { if (window.confirm('Voulez-vous supprimer cette critique ?')) this.deleteReview(review.idReview) } }  variant="outline-danger"><FontAwesomeIcon icon={faTrashAlt} ></FontAwesomeIcon></Button></td>
                                 </tr>
                                 ))}
