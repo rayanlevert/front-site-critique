@@ -139,6 +139,7 @@ class Movies extends Component
         if(this.isAdmin())
         {
           return(<>
+          <CreateMovie/> 
             </>         
           );
         }
@@ -158,8 +159,8 @@ class Movies extends Component
               <Row className="col-12 justify-content-around">          
                { this.state.movies.map(movie=><>
                  <div id="admin-create-movie-btn">
-                 {/*()=>this.adminCreateForm()*/} 
-                 <CreateMovie/> 
+                 {this.adminCreateForm} 
+                 
                  </div>
                 <Col className="col-auto m-5">
                   

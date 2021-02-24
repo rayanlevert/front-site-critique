@@ -1,5 +1,33 @@
 @font-face { font-family: Mania; src: url(../mania.ttf);}
 
+
+.comedy-title{
+    font-size: 30px;
+    margin-top: 50%;
+    height: fit-content !important;
+    font-weight: bolder;
+text-shadow: 1px 1px black;
+overflow: hidden;
+color: #9e0003;
+}
+.comedy-img{
+    height: 500px;
+}
+.btn-hot{
+    font-size: 25px !important;
+    transition-property: background-color,border;
+    transition-duration: .2s,.1s;
+    transition-timing-function: ease-in;
+}
+.btn-hot:hover{
+    scale : 1!important;
+    background-color : #ff000d32!important;
+    border: 3px inset #9e0003!important;
+}
+.hot-main-title{
+    height: fit-content;
+}
+
 #home-body{
     background : linear-gradient(#bebdbd, #ededed);
 }
@@ -18,7 +46,7 @@
     color: darkgray;
 }
 .movie-card-comedy{
-    width: 16rem;
+    width: 80%;
     margin: auto;
 }
 
@@ -26,6 +54,17 @@
     width: 12rem;
     height: auto;
     padding: 6px;
+}
+.card{
+    
+    transition-property: background-color, scale, border;
+    transition-duration : .3s,.2s;
+    transition-timing-function: ease-in-out;
+}
+.card:hover{
+    background-color: rgba(168, 168, 168, 0.4);
+    scale: 1.02;
+    border: 2px double#9e0003;
 }
 .card-body.movie-card-body .card-title-home{
     height: 40px !important;
@@ -49,7 +88,7 @@
 }
 .card-body.movie-card-body #view-movie:hover{
     color: #aa1417;
-    scale: 1.01;
+
 }
 
 .card-body.movie-card-body #del-movie{
@@ -60,7 +99,6 @@
 }
 .card-body.movie-card-body #del-movie:hover{
     color: #aa1417;
-    scale: 1.01;
 }
 #admin-create-movie-btn{
     position : fixed; bottom: 10px; right: 20px;
@@ -69,9 +107,9 @@
 
 .badge-home-cat{
     position: absolute;
-    left: -11px;
-    top: -25px;
-    font-size: 40px;
+    left: 0px;
+    top: -42px;
+    font-size: 50px;
 }
 
 #best-games h4{
