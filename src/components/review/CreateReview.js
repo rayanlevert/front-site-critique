@@ -49,7 +49,7 @@ class CreateReview extends Component {
             },
             body: JSON.stringify(reviewToJSON)
         })
-            .then(res => this.props.history.push(this.state.path))
+            .then(res => this.props.history.goBack())
             .catch(err => alert("Erreur s'est produite lors de la création de votre critique, veuillez réesasayer"))
     }
 
