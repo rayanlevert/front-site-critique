@@ -66,9 +66,9 @@ function Login({ login }) {
 
     return (
         <>
-            <Container>
-                <Card className="mt-5">
-                    <Card.Body>
+        <Container>
+            <Card className="mt-5">
+                <Card.Body>
                         <h2>Connexion</h2>
 
                         <h3><span style={{fontFamily:"Mania"}}>CritiquesMania</span></h3>

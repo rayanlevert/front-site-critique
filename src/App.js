@@ -30,11 +30,6 @@ import ProfilePublic from './components/users/ProfilePublic';
 import { faUber } from '@fortawesome/free-brands-svg-icons';
 
 function App() {
-/*
-            <LinkContainer to="/profil">
-              <Nav.Link className="navItem"><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Profil</Nav.Link>
-            </LinkContainer>
-*/
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">

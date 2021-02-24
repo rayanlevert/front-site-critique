@@ -19,7 +19,7 @@ const requests = {
   put: (url, body) =>
     superagent.put(`${API_ROOT}${url}`, body),
   post: (url, body) =>
-    superagent.post(`${API_ROOT}${url}`, body, headers).then(responseBody)
+    superagent.post(`${API_ROOT}${url}`, body).then(responseBody)
 };
 const Movies = {
   all: requests.get(`api/movies/`), //Récupérer la liste complète des films sans filtre, retourne un tableau

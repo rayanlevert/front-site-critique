@@ -38,3 +38,11 @@
     transform: rotate(360deg);
   }
 }*/
+a.dropdown-toggle {
+  text-decoration: none;
+  color: #8e0002 !important;
+  }
+
+  .form-label {
+    font-weight: 600 !important;
+}

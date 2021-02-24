@@ -1,4 +1,4 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
@@ -95,7 +95,7 @@ function AddUser({ is_refreshed }) {
     return (
         <>
             <Button size="sm" onClick={handleOpen}>
-                Créer un utilisateur
+               <FontAwesomeIcon icon={faUserPlus} /> Créer un utilisateur
             </Button>
 
             <Modal show={open} onHide={handleClose} size='lg'>

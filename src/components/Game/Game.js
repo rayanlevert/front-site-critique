@@ -48,8 +48,8 @@ class Game extends Component {
     render() {
         return (
             <> 
-                <Col>      
-                <Card className="col-12 mt-4">
+                <Col lg="12">      
+                <Card className="mt-4">
                     <a className="ml-4 mt-3 text-left" href="/article/game"><FontAwesomeIcon icon={faArrowLeft} /> Retour</a>
                     <Card.Body>
                         <h2>{this.state.games.title}</h2>

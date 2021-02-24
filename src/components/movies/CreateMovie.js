@@ -25,16 +25,18 @@ function CreateMovie()
     const handleCreate = (e) => {
         e.preventDefault();
         let movieSubmitted = movie.moviesReducer.movie;
+        console.log(movie);
         try{
             let movieValidated = movieValidation(movieSubmitted);
             if(movieValidated === true)
             {
                 movieSubmitted.creationArticleDate = (new Date()).toJSON();
                 movieSubmitted.publishDate = (new Date(movieSubmitted.publishDate)).toJSON();
-                agent.Movies.create(JSON.stringify(movieSubmitted)).then((res) => {
+                agent.Movies.create(/*JSON.stringify(*/movieSubmitted/*)*/).then((res) => {
                     /*
                     REDIRECTION
                     */
+                   console.log(res);
                 });  
             }
             
@@ -45,18 +47,7 @@ function CreateMovie()
     }
     const movieValidation = ( movieSubmitted )=>
     {
-        let val = false;
-        try{
-            //validations            
-            val = true;
-        }
-        catch(e){
-            //erreurs
-            val = false;
-        }
-        finally{
-            return val;
-        }
+        return true;
     }
 
     return(

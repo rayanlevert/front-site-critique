@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { Media,Dropdown } from 'react-bootstrap';
 import { FormattedDateWithTime } from '../Date/FormattedDate';
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Pagination from '../pagination/Pagination';
  
 class Review extends Component {
@@ -32,21 +32,17 @@ class Review extends Component {
     }
 
     async componentDidMount(){
-        console.log("Appel de la rêquete review article by id");
         const idArticle = this.props.match.params.id;
-        console.log(idArticle);
         if(this.state.reviews.length === 0){
             const REVIEW_API_ID_BY_ARTICLE ="http://localhost:8080/api/reviews/article/" + idArticle;
             const response = await fetch(REVIEW_API_ID_BY_ARTICLE);
             const reviews = await response.json();
             this.setState({ reviews }); 
-            console.log(reviews);
         } else{
             this.setState(this.state.reviews.length)
         }   
         const user = JSON.parse(localStorage.getItem('user'));
         this.setState({user});
-        console.log(this.state);
     }
 
     render() {
@@ -82,7 +78,7 @@ class Review extends Component {
                                 <div className="media-body">
                                         <h5>{ review.titleReview }</h5>
                                     <p className="text-left">{ review.contentReview }</p>
-                                    <small className="float-left">Note de la critique : { review.noteReview }</small><small className="float-right">Créé par { review.userUsername } le <FormattedDateWithTime date={ review.publishDate } /></small>
+                                    <small className="float-left">Note de la critique : { review.noteReview }</small><small className="float-right">Créé par <Link to={`/profil/${review.userUsername}`}>{review.userUsername}</Link> le <FormattedDateWithTime date={ review.publishDate } /></small>
                                 </div>
                             </div>
                         </div>
