@@ -46,6 +46,7 @@ class Game extends Component {
     }
 
     render() {
+        console.log("article",this.state.games)
         return (
             <> 
                 <Col lg="12">      
@@ -71,7 +72,7 @@ class Game extends Component {
                             </Row>
                             <Row>
                                 <Col  md={{ span: 2, offset: 10 }} className="text-right">
-                                <small>Publié le <FormattedDate date={this.state.games.publishDate}/></small>
+                                <small>Publié le <FormattedDate date={this.state.games.creationArticleDate}/></small>
                                 </Col>
                             </Row>  
                         <div className="row">

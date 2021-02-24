@@ -94,7 +94,7 @@ class ProfilePublic extends Component {
                         <Jumbotron fluid>
                             <Image roundedCircle width="15%" src={`../../ressources/img/article/game/anonyme.png`} className="img-fluid" alt="image de profil de utilisateur" title="image de profil de l'utilisateur" />
                             <blockquote className="mt-2">
-                                <p>{this.state.user.catchPhrase !== '' ? 'Aucune phrase d\'accroche' : this.state.user.catchPhrase}</p>
+                                <p>{this.state.user.catchPhrase !== '' ? this.state.user.catchPhrase : 'Aucune phrase d\'accroche'}</p>
                             </blockquote>
                         </Jumbotron>
                         <Card.Body>
@@ -119,8 +119,9 @@ class ProfilePublic extends Component {
                                     <ListGroup>
                                         <ListGroup.Item><b>Pseudonyme : </b> {this.state.user.username}</ListGroup.Item>
                                         <ListGroup.Item><b>Âge : </b> {this.state.user.age} ans</ListGroup.Item>
-                                        <ListGroup.Item><b>Membre depuis: </b>{diffDuration.days()} jour{diffDuration.days() > 1 ? 's' : ''} {diffDuration.hours()} heure{diffDuration.hours() > 1 ? 's' : ''} et {diffDuration.minutes()} minute{diffDuration.minutes() > 1 ? 's' : ''}, inscrit le {this.state.user.registrationDate !== undefined ? moment(this.state.user.registrationDate).format('LL') : ''}</ListGroup.Item>
-                                        <ListGroup.Item><h3 className="list-group-item-heading">Description</h3>{this.state.user.description !== '' ? 'Aucune description' : this.state.user.description}</ListGroup.Item>
+                                        <ListGroup.Item><b>Membre depuis </b> le {this.state.user.registrationDate !== undefined ? moment(this.state.user.registrationDate).format('LL') : ''}</ListGroup.Item>
+                                        <ListGroup.Item><b>Nombre de critique : </b> {this.state.reviews.length}</ListGroup.Item>
+                                        <ListGroup.Item><h3 className="list-group-item-heading">Description</h3>{this.state.user.description !== '' ?  this.state.user.description : 'Aucune description'}</ListGroup.Item>
                                     </ListGroup>
                                 </Col>
                             </Row>
@@ -171,3 +172,9 @@ class ProfilePublic extends Component {
 }
 
 export default withRouter(ProfilePublic);
+
+/**
+ * TODO
+ *  - Faire un systéme de fidélité
+ *  {diffDuration.years()} année {diffDuration.months()} mois {diffDuration.days()} jour{diffDuration.days() > 1 ? 's' : ''}
+ */
