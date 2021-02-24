@@ -108,9 +108,9 @@ class HomeIndex extends Component{
         console.log("this.state.articles.movies",movies)
         
         return(
-            <>
+            <>  
             <div id="home-body">
-            <h1 id="home-main-title" className="block"><FontAwesomeIcon icon={faPlayCircle} className="align-bottom" /> Bienvenue sur CritiquesMania !<br />
+            <h1 id="home-main-title" className="block"><FontAwesomeIcon icon={faPlayCircle} className="align-bottom" /> Bienvenue sur <span style={{fontFamily: "Mania"}}>CritiquesMania</span> !<br />
             <small className="text-muted inline" id="small-home-main-title">La communauté multimédia sérieuse, fun et surtout totalement gratuite</small>
             </h1>
 
