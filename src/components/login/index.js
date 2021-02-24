@@ -6,6 +6,8 @@ import { login } from "../../redux/actions/actionCreatorUserAuth";
 import { Dot } from 'react-animated-dots';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import "../../web/css/users/index.css";
+
 
 function Login({ login }) {
     const [userAuth, setUserauth] = useState({ username: '', password: '', isLogged: false, userId: 0, roles: [] });
@@ -69,7 +71,7 @@ function Login({ login }) {
                 <Card.Body>
                         <h2>Connexion</h2>
 
-                        <h3>Accéder à CritiquesMania</h3>
+                        <h3><span style={{fontFamily:"Mania"}}>CritiquesMania</span></h3>
 
                         <div>
                             <Alert id="alert" variant={variant} show={visible}></Alert>
@@ -79,7 +81,7 @@ function Login({ login }) {
 
                             <Form.Group style={{ display: "inline-block", width: "50%" }} controlId="username">
                                 <Form.Label>Pseudonyme</Form.Label>
-    
+
                                 <Form.Control type="text" placeholder="Entrez votre pseudonyme" onChange={onChange} required />
                             </Form.Group>
                             <br />
@@ -88,7 +90,6 @@ function Login({ login }) {
                                 <Form.Control type="password" placeholder="Entrez votre mot de passe" onChange={onChange} required />
                             </Form.Group>
                             <br />
-
                             <Button onClick={handleOnClick}>Se connecter</Button>
 
                             {redirect && <Redirect to="/"></Redirect>}
@@ -99,9 +100,9 @@ function Login({ login }) {
                             <Link to="/signin">Inscrivez-vous!</Link>
                         </div>
 
-                </Card.Body>
-            </Card>
-        </Container>
+                    </Card.Body>
+                </Card>
+            </Container>
         </>
     )
 }
