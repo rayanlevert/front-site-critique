@@ -76,21 +76,23 @@ function User({ history }) {
                         <Table striped hover size="sm">
                             <thead className="text-left">
                                 <tr>
+                                    <th>#</th>
                                     <th>Utilisateur</th>
                                     <th>Adresse email</th>
-                                    <th className="text-center">Actif</th>
+                                    <th>Dernière connexion</th>
                                 </tr>
                             </thead>
                             <tbody className="text-left">
                                 {currentUsers.map(user =>
                                     <tr key={user.id}>
+                                        <td style={{width:"1rem"}}>{user.id}</td>
                                         <td>
                                             <Link onClick={() => profileOnClick(user.id)}>{user.lastname.toUpperCase() + ' ' + user.firstname}<br /></Link>
                                             <Role roles={user.roles}></Role>
                                                 login : <em>{user.username}</em>
                                         </td>
                                         <td>{user.email}</td>
-                                        <td className="text-center">{user.enabled ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faBan} />}</td>
+                                        <td>{user.lastConnection}</td>
                                     </tr>
                                 )}
                                 <PaginationUser indexOfLastUser={indexOfLastUser} indexOfFirstUser={indexOfFirstUser} usersPerPage={usersPerPage} totalUsers={users.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage} />

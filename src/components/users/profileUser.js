@@ -1,21 +1,24 @@
-import { faBan, faExclamationTriangle, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faEllipsisH, faExclamationTriangle, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Alert, Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Dropdown, Form, Modal, Row } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import { remove, update } from "../../redux/actions/actionCreatorUserAuth";
 import "../../web/css/users/index.css";
+import { FormattedDateWithTime } from "../Date/FormattedDate";
+import Pagination from "../pagination/Pagination";
 import roleToString from "../Role/roleToString";
 import Role from "./Role";
 
 export function ProfileUser({ update_user, remove_user }) {
     let ROLES = ["ROLE_USER", "ROLE_ADMIN"];
 
-    const { id } = useParams(); 
+    const { id } = useParams();
     const [user, setUser] = useState({});
     const userAuth = useSelector(state => state.userAuth);
     const [roles, setRoles] = useState(["ROLE_USER", "ROLE_ADMIN"]);
+    const [reviews, setReviews] = useState([]);
 
     const [openPassword, isOpenPassword] = useState(false);
     const [password, setPassword] = useState({ rawPassword: '', encodedPassword: '' });
@@ -38,16 +41,16 @@ export function ProfileUser({ update_user, remove_user }) {
     const handleOpenDelete = () => isOpenDelete(true);
 
     useEffect(() => {
-        
+
         if (userAuth.userId !== user.id || !userAuth.roles.includes("ROLE_ADMIN")) {
             <Redirect to="/"></Redirect>
         }
 
-        if (!userAuth.roles.some( role => role.name === "ROLE_ADMIN")) {
-            let array = ROLES.slice(0,1);
+        if (!userAuth.roles.some(role => role.name === "ROLE_ADMIN")) {
+            let array = ROLES.slice(0, 1);
             setRoles(array);
         }
-        
+
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => {
                 response.json().then(user => {
@@ -55,6 +58,13 @@ export function ProfileUser({ update_user, remove_user }) {
                     setPassword({ ...password, encodedPassword: user.password })
                 })
             });
+
+        fetch(`http://localhost:8080/api/reviews/user/${id}`)
+            .then(response => {
+                response.json().then(reviews => {
+                    setReviews(reviews);
+                })
+            })
     }, []);
 
     const onChange = (e) => {
@@ -79,7 +89,6 @@ export function ProfileUser({ update_user, remove_user }) {
         if (e.target.checked) {
             array.push(object);
         } else {
-            console.log("a",array);
             const index = array.findIndex((role) => role.name === e.target.id);
             array.splice(index, 1);
         }
@@ -123,6 +132,32 @@ export function ProfileUser({ update_user, remove_user }) {
         })
     }
 
+    const getLinkReview = (review) => {
+        console.log(review);
+        let url = '';
+
+        switch (review.article.discriminator) {
+            case 'game':
+                url = "/article/game/" + review.article.id;
+                break;
+
+            case 'movie':
+                url = "/movie/view/" + review.article.id;
+                break;
+        }
+        console.log(url);
+        return url;
+    }
+
+    const getLinkUpdate = (review) => {
+        let url = '';
+
+        switch (review.article.discriminator) {
+            case 'game':
+                url = "/a"
+        }
+    }
+
     const onChangePasswordVerif = (e) => {
         setPassword({ ...password, rawPassword: e.target.value });
     }
@@ -151,6 +186,15 @@ export function ProfileUser({ update_user, remove_user }) {
             } else displayAlert("info", response.message, "alertDelete");
         }))
     }
+
+    const deleteReview = (id) => {
+        console.log(id);
+        const URL_DELETE_REVIEW = "http://localhost:8080/api/reviews/review/" + id;
+        fetch(URL_DELETE_REVIEW, { method: 'DELETE' })
+            .then(() => setReviews(reviews.filter(review => review.idReview !== id) ))
+            .catch(err => alert("Erreur lors de la suppresion de la critique"))
+    }
+
 
     return (
         <>
@@ -203,7 +247,7 @@ export function ProfileUser({ update_user, remove_user }) {
                         <hr class="solid"></hr>
                         <Form.Group controlId="roles">
                             {
-                                roles.map((role) => <Form.Check onChange={onChangeRoles} custom type="checkbox" id={role} label={roleToString(role)} checked={checkRole(role)} required hidden/>)
+                                roles.map((role) => <Form.Check onChange={onChangeRoles} custom type="checkbox" id={role} label={roleToString(role)} checked={checkRole(role)} required hidden />)
                             }
                         </Form.Group>
                     </Col>
@@ -212,6 +256,42 @@ export function ProfileUser({ update_user, remove_user }) {
                     <Col sm={6}>
                         <Button variant="primary" size="sm" onClick={handleSubmitSave}><FontAwesomeIcon icon={faSave}></FontAwesomeIcon> Modifier</Button> &nbsp;
                         <Button variant="danger" size="sm" onClick={handleOpenDelete}><FontAwesomeIcon icon={faBan}></FontAwesomeIcon> Effacer le profil</Button>
+                    </Col>
+                </Row>
+
+                <Row style={{ paddingTop: "2rem" }}>
+                    <Col sm={10}>
+                        <b>VOS CRITIQUES</b>
+                        <hr class="solid"></hr>
+                        {(reviews.length !== 0 ? (
+                            reviews.map(review => (
+                                <div key={review.idReview} className="col-12 mt-4">
+                                    { userAuth !== null ? (review.user.id === userAuth.userId ? (
+                                        <Dropdown className="float-right">
+                                            <Dropdown.Toggle variant="link" id="dropdown-basic">
+                                                <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
+                                            </Dropdown.Toggle>
+
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item><Link to={`/update-review/${review.idReview}`}>Modifier</Link></Dropdown.Item>
+                                                <Dropdown.Item onClick={() => deleteReview(review.idReview)}>Supprimer</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    ) : ("")) : ("")}
+                                    <div className="media">
+                                        <div className="media-body">
+                                            <h4><Link to={getLinkReview(review)}>{review.article.title}</Link></h4>
+                                            <h5>{review.titleReview}</h5>
+                                            <p className="text-left">{review.contentReview}</p>
+                                            <small className="float-left">Note de votre critique : {review.noteReview}</small><small className="float-right">écrite le <FormattedDateWithTime date={review.publishDate} /></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                            )
+                        ) : (
+                                <p>Aucune critique est disponible pour cette page.</p>
+                            ))}
                     </Col>
                 </Row>
             </Container>
@@ -256,13 +336,17 @@ export function ProfileUser({ update_user, remove_user }) {
                 </Modal.Footer>
             </Modal>
 
+
+
+
+
             { redirect && <Redirect to="/"></Redirect>}
         </>
     )
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { 
+    return {
         update_user: (userUpdated) => dispatch(update(userUpdated)),
         remove_user: (userRemoved) => dispatch(remove(userRemoved))
     }

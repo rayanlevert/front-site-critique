@@ -15,7 +15,7 @@ function AddUser({ is_refreshed }) {
     const [variant, setVariant] = useState("");
     const [visible, setVisible] = useState(false);
     const [password, setPassword] = useState("");
-    const alert = useRef(null);
+    const [alertMessage, setAllertMessage] = useState("");
 
     const handleOpen = () => isOpen(true);
     const handleClose = () => isOpen(false);
@@ -25,10 +25,7 @@ function AddUser({ is_refreshed }) {
     const displayAlert = (variant, message) => {
         setVisible(true);
         setVariant(variant);
-        console.log(alert);
-        
-        if (alert.current !== null)
-            alert.current.textContent = message;
+        setAllertMessage(message);
     }
 
     const onBlur = (e) => {
@@ -60,7 +57,6 @@ function AddUser({ is_refreshed }) {
         if (e.target.checked) {
             setUser({ ...user, civilite: e.target.id })
             setCiviliteChecked({ [e.target.id]: true });
-            console.log(civiliteChecked);
         }
     }
 
@@ -108,7 +104,7 @@ function AddUser({ is_refreshed }) {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Alert id="alert" variant={variant} show={visible} ref={alert}></Alert>
+                    <Alert id="alert" variant={variant} show={visible}>{alertMessage}</Alert>
                     <Form>
                         <Row style={{ marginTop: "3rem" }}>
                             <Col sm={4}>
@@ -165,7 +161,6 @@ function AddUser({ is_refreshed }) {
                                 <hr class="solid"></hr>
 
                                 <Form.Group controlId="roles">
-                                    <Form.Label>Rôles</Form.Label>
                                     {
                                         ROLES.map((role) => <Form.Check onChange={onChangeRoles} custom type="checkbox" id={role} label={roleToString(role)} required />)
                                     }

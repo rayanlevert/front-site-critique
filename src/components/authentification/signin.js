@@ -15,6 +15,7 @@ export function SignIn({ sign_in, log_in }) {
 
     const [visible, setVisible] = useState(false);
     const [variant, setVariant] = useState("error");
+    const [alertMessage, setAlertMessage] = useState("");
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
@@ -44,8 +45,7 @@ export function SignIn({ sign_in, log_in }) {
     const displayAlert = (variant, message) => {
         setVariant(variant);
         setVisible(true);
-        let alert = document.getElementById('alert');
-        alert.textContent = message;
+        setAlertMessage(message);
         if (variant == 'success') {
             setTimeout(() => {
                 setRedirect(true);
@@ -72,17 +72,18 @@ export function SignIn({ sign_in, log_in }) {
                     }))
                     .catch(error => console.log(error))
             } else {
-                alert("Les mots de passe ne sont pas les mêmes.")
+                
             }
         } else {
-            alert("Veuillez renseigner tous les champs.")
+            
         }
     }
 
     return (
         <>
             <h1>Inscrivez vous, c'est gratuit!</h1>
-            <Alert id='alert' variant={variant} show={visible}></Alert>
+            <small>Les champs avec * sont obligatoires.</small>
+            <Alert id='alert' variant={variant} show={visible}>{alertMessage}</Alert>
 
             <Form className="formSignin">
                 <Row style={{ marginTop: "3rem" }}>
@@ -90,29 +91,29 @@ export function SignIn({ sign_in, log_in }) {
                         <b>GENERAL</b>
                         <hr class="solid"></hr>
                         <Form.Group controlId="civilite">
-                            <Form.Label>Civilite</Form.Label><br />
+                            <Form.Label>Civilite*</Form.Label><br />
                             {
                                 CIVILITE.map((civilite) => <Form.Check inline onChange={onChangeCivilite} id={civilite} custom type="radio" label={civilite} checked={civiliteChecked[civilite]} required></Form.Check>)
                             }
                         </Form.Group>
 
                         <Form.Group controlId="lastname">
-                            <Form.Label>Nom de famille</Form.Label>
+                            <Form.Label>Nom de famille*</Form.Label>
                             <Form.Control type="text" placeholder="Entrez votre nom de famille" value={userSignIn.lastname} onChange={onChange} required />
                         </Form.Group>
 
                         <Form.Group controlId="firstname">
-                            <Form.Label>Prénom</Form.Label>
+                            <Form.Label>Prénom*</Form.Label>
                             <Form.Control type="text" placeholder="Entrez votre prénom" value={userSignIn.firstname} onChange={onChange} required />
                         </Form.Group>
 
                         <Form.Group controlId="username">
-                            <Form.Label>Pseudonyme</Form.Label>
+                            <Form.Label>Pseudonyme*</Form.Label>
                             <Form.Control type="text" placeholder="Entrez votre pseudonyme" value={userSignIn.username} onChange={onChange} required />
                         </Form.Group>
 
                         <Form.Group controlId="age">
-                            <Form.Label>Age</Form.Label>
+                            <Form.Label>Age*</Form.Label>
                             <Form.Control type="number" placeholder="Entrez votre âge" value={userSignIn.age} onChange={onChange} required />
                         </Form.Group>
                     </Col>
@@ -121,17 +122,17 @@ export function SignIn({ sign_in, log_in }) {
                         <b>AUTHENTIFICATION</b>
                         <hr class="solid"></hr>
                         <Form.Group controlId="email">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>Email*</Form.Label>
                             <Form.Control type="email" placeholder="Entrez votre adresse email" value={userSignIn.email} onChange={onChange} required />
                         </Form.Group>
 
                         <Form.Group controlId="password">
-                            <Form.Label>Mot de passe</Form.Label>
+                            <Form.Label>Mot de passe*</Form.Label>
                             <Form.Control type="password" placeholder="Entrez votre mot de passe" value={userSignIn.password} onChange={onChange} required />
                         </Form.Group>
 
                         <Form.Group controlId="passwordCheck">
-                            <Form.Label>Confirmez le mot de passe</Form.Label>
+                            <Form.Label>Confirmez le mot de passe*</Form.Label>
                             <Form.Control type="password" placeholder="Confirmez votre mot de passe" value={password} onChange={onChangePassword} required />
                         </Form.Group>
                     </Col>
