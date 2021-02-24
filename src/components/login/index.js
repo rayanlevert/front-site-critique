@@ -67,7 +67,7 @@ function Login({ login }) {
         <Container>
             <Card className="mt-5">
                 <Card.Body>
-                                    <h2>Connexion</h2>
+                        <h2>Connexion</h2>
 
                         <h3>Accéder à CritiquesMania</h3>
 
@@ -88,12 +88,7 @@ function Login({ login }) {
                                 <Form.Control type="password" placeholder="Entrez votre mot de passe" onChange={onChange} required />
                             </Form.Group>
                             <br />
-                            <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                                <input type="text" name="email" class="form-control" placeholder="Username"/>
-                            </div>
+
                             <Button onClick={handleOnClick}>Se connecter</Button>
 
                             {redirect && <Redirect to="/"></Redirect>}

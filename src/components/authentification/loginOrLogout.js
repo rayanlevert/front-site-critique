@@ -12,12 +12,12 @@ export default function LoginOrLogout() {
             {
                 !userAuth.isLogged ? (
                     <LinkContainer to="/login">
-                        <Nav.Link><FontAwesomeIcon icon={faUserLock}></FontAwesomeIcon> Se connecter</Nav.Link>
+                        <Nav.Link className="navItem"><FontAwesomeIcon icon={faUserLock}></FontAwesomeIcon> Se connecter</Nav.Link>
                     </LinkContainer>
 
                 ) : (
                         <>
-                            <NavDropdown alignRight title={userAuth.username} id="basic-nav-dropdown">
+                            <NavDropdown alignRight title={<div style={{display: "inline-block"}}><FontAwesomeIcon icon={faUser} /> {userAuth.username} </div>} id="basic-nav-dropdown">
                                 <NavDropdown.Item href={'/profil/' + userAuth.username}><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Mon profil</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/logout"><FontAwesomeIcon icon={faSignOutAlt}></FontAwesomeIcon> Se déconnecter</NavDropdown.Item>

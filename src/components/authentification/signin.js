@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { login, signin } from "../../redux/actions/actionCreatorUserAuth";
@@ -81,6 +81,9 @@ export function SignIn({ sign_in, log_in }) {
 
     return (
         <>
+        <Container>
+        <Card className="mt-3 mb-3">
+            <Card.Body>
             <h1>Inscrivez vous, c'est gratuit!</h1>
             <small>Les champs avec * sont obligatoires.</small>
             <Alert id='alert' variant={variant} show={visible}>{alertMessage}</Alert>
@@ -91,7 +94,7 @@ export function SignIn({ sign_in, log_in }) {
                         <b>GENERAL</b>
                         <hr class="solid"></hr>
                         <Form.Group controlId="civilite">
-                            <Form.Label>Civilite*</Form.Label><br />
+                            <Form.Label className="test">Civilite*</Form.Label><br />
                             {
                                 CIVILITE.map((civilite) => <Form.Check inline onChange={onChangeCivilite} id={civilite} custom type="radio" label={civilite} checked={civiliteChecked[civilite]} required></Form.Check>)
                             }
@@ -141,7 +144,7 @@ export function SignIn({ sign_in, log_in }) {
                     <Col sm={8}>
                         <Form.Group controlId="description">
                             <Form.Label>Décrivez-vous en quelques lignes!</Form.Label>
-                            <Form.Control as="textarea" rows="3" placeholder="Votre description" value={userSignIn.description} onChange={onChange} required />
+                            <Form.Control as="textarea" rows="2" placeholder="Votre description" value={userSignIn.description} onChange={onChange} required />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -157,8 +160,9 @@ export function SignIn({ sign_in, log_in }) {
                 </Row>
 
             </Form>
-            <h1></h1>
-
+                </Card.Body>
+            </Card>
+            </Container>
             {redirect && <Redirect to="/"></Redirect>}
         </>
     )
