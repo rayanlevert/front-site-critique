@@ -1,4 +1,4 @@
-import {React,Component} from 'react';
+import {React,Component, useEffect} from 'react';
 import { connect } from 'react-redux';
 import CreateMovie from './CreateMovie';
 import { Row, Col, Button } from 'react-bootstrap';
@@ -44,6 +44,7 @@ const mapStateToProps = state => ({
           console.log(res);
         });
       };
+      
   
 class Movies extends Component
 {
@@ -52,7 +53,7 @@ class Movies extends Component
     {
         super(props);
         this.state = {
-            movie: []
+            movies: []
         }
         console.log("this.props à la fin de constructor(props)");
         console.log(props);
@@ -65,30 +66,57 @@ class Movies extends Component
       componentWillUnmount() { 
         this.props.onUnload();
       }
-      getPoster(title, id){
-        fetch('https://api.themoviedb.org/3/search/movie?api_key=01195188722d58d88247d177a9a84eb6&language=fr-FR&query='+title+'&page=1&include_adult=true').then(async res =>
-            {
-                const dataByTitle = await res.json();
-                
-                try
-                {
-                  const dataImg = dataByTitle.results[0].poster_path;
-                  const resImg = "https://image.tmdb.org/t/p/original"+dataImg;
-                  document.getElementById("img-"+id).setAttribute("src",resImg);
-                }
-                catch(e){
-                  document.getElementById("img-"+id).setAttribute("src","https://picsum.photos/600/800");
-                }
-            });
-    };
+      
       //quand le composé est monté : chargement de la liste + définition state
       componentDidMount(){
         this.props.onLoad(
           agent.Movies.all.then((res) =>{
-          this.setState({movie : res});
+          this.setState({movies : res});
         }));
       }
+      /*getPoster(title, id){
+        fetch('https://api.themoviedb.org/3/search/movie?api_key=01195188722d58d88247d177a9a84eb6&language=fr-FR&query='+title+'&page=1&include_adult=true').then(res =>
+          {
+              const dataByTitle = res.json();
+              
+              try
+              {
+                const dataImg = dataByTitle.results[0].poster_path;
+                const resImg = "https://image.tmdb.org/t/p/original"+dataImg;
+                document.getElementById("img-"+id).setAttribute("src",resImg);
+              }
+              catch(e){
+                try{
+                  document.getElementById("img-"+id).setAttribute("src","https://picsum.photos/600/800");
+                }catch{}
+                
+              }finally{}
+          });        
+  }*/
 
+  getPoster(title, id){
+    fetch('https://api.themoviedb.org/3/search/movie?api_key=01195188722d58d88247d177a9a84eb6&language=fr-FR&query='+title+'&page=1&include_adult=true').then(async res =>
+        {
+            const dataByTitle = await res.json();
+            
+            try
+            {
+              const dataImg = dataByTitle.results[0].poster_path;
+              const resImg = "https://image.tmdb.org/t/p/original"+dataImg;
+              document.getElementById("img-"+id).setAttribute("src",resImg);
+            }
+            catch(e){
+            try{
+                document.getElementById("img-"+id).setAttribute("src","https://picsum.photos/600/800");
+            }catch{}
+            }
+            finally{
+                try{
+                    const dataImg = dataByTitle.results[0].poster_path;
+              const resImg = "https://image.tmdb.org/t/p/original"+dataImg;
+                    document.getElementById("img-movieComedy-"+id).setAttribute("src",resImg);                    }catch{}
+            }
+        });};
 
       isAdmin(){
         try{
@@ -110,9 +138,8 @@ class Movies extends Component
       {
         if(this.isAdmin())
         {
-          return(
-            
-                  <CreateMovie/>
+          return(<>
+            </>         
           );
         }
       }
@@ -120,42 +147,41 @@ class Movies extends Component
         if(this.isAdmin())
         {
           return(
-            <div className="m-3 border-top p-3">
-            <Button className="btn-danger" id="del-movie" data-id={id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
-            </div>
+            null
           );
         }
       }
 
       
-      render = () => {
-          return (<>
+      render(){
+          return (
+              <Row className="col-12 justify-content-around">          
+               { this.state.movies.map(movie=><>
+                 <div id="admin-create-movie-btn">
+                 {/*()=>this.adminCreateForm()*/} 
+                 <CreateMovie/> 
+                 </div>
+                <Col className="col-auto m-5">
                   
-              <Row className="col-12 justify-content-around">
-               { this.state.movie.map(movie=>
-                 <>
-                <div id="admin-create-movie-btn">
-                {this.adminCreateForm()}  
-                </div>
-               <Col className="col-auto m-5">
-                 
-               <div className="card movie-card" key={ movie.id }>
-                <img className="card-img-top img-movie" id={"img-"+movie.id} data-lazy={ this.getPoster(movie.title, movie.id) } />
-                <div className="card-body movie-card-body">
-                    <h6 className="card-title">{movie.title}</h6>
-                    <small className="card-subtitle text-muted">{ new Date(movie.publishDate).toLocaleDateString() }</small>
-                    <p className="card-text genres">{ movie.genre }</p>
-                    <p className="card-deck justify-content-around  text-black-50">A partir de {movie.minAge} ans</p>
-                    <Link id="view-movie" className="btn" to={`/movie/view/${movie.id}`} >VOIR LA FICHE</Link>
-                    
-                    { this.adminDeleteForm(movie.id) }
-                </div>
-                </div>
-               </Col>
-      </>)}
-            </Row>
-          </>)
-      }
+                <div className="card movie-card" key={ movie.id }>
+                 <img className="card-img-top img-movie" id={`img-${movie.id}`} data-lazy={ this.getPoster(movie.title, movie.id) } />
+                 <div className="card-body movie-card-body">
+                     <h6 className="card-title">{movie.title}</h6>
+                     <small className="card-subtitle text-muted">{ new Date(movie.publishDate).toLocaleDateString() }</small>
+                     <p className="card-text genres">{ movie.genre }</p>
+                     <p className="card-deck justify-content-around  text-black-50">A partir de {movie.minAge} ans</p>
+                     <Link id="view-movie" className="btn" to={`/movie/view/${movie.id}`} >VOIR LA FICHE</Link>
+                     
+                     {/* this.adminDeleteForm(movie.id)*/ }
+                     <div className="m-3 border-top p-3">
+            <Button className="btn-danger" id="del-movie" data-id={movie.id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
+            </div>
+                 </div>
+                 </div>
+                </Col> </>)}</Row>
+          
+          
+      )}
 
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Movies)
