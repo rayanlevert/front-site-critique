@@ -23,8 +23,8 @@ function MovieForm({movieAdd}){
             "webContent": null
         };
     }
-    const[movieValue, setMovieValue] = useState(movieAdd);
-    console.log(movieValue);
+    const[movieValue, setMovieValue] = useState(false);
+    //console.log(movieValue);movieAdd
     //changement des valeurs
     const changeMovieValues = (e) =>{
         console.log(e);
@@ -36,7 +36,7 @@ function MovieForm({movieAdd}){
         console.log(dataValue);
         console.log("Nouvelle valeur du film : ");
         console.log(movieValue.publishDate);
-        movieAdd(movieValue);
+        //movieAdd(movieValue);
     }
     const changeWebContent = (content, editor) =>{
         let dataElement = editor.id;
@@ -108,33 +108,31 @@ function MovieForm({movieAdd}){
                 <Form.Control valid="true" contentEditable="true" as="textarea" rows="4" name="synopsys" placeholder="Saisir synopsis" defaultValue={ movieValue.synopsys } onChange={ changeMovieValues } />
             </Form.Group>
 
-            <Form.Group controlId="webContent">
-                <Form.Label>Contenu supplémentaire</Form.Label>
+            
                 <Editor
+                    key="webContent"
                     valid="true"
                     textareaName = "webContent"
                     id = "webContent"
-                    contentEditable="true"
+                    //contentEditable="true"
                     apiKey="mz2rtkyzjz6zvrhbjko7p44n2wf4prqvbiwql7mwplxky7z2"
                     textareaName="webContent"
-                    initialValue={ movieValue.webContent }
+                    
+                    //initialValue={ movieValue.webContent }
                     init={{
+                        media_live_embeds: true,
                         height: 500,
-                        menubar: false,
+                        menubar: 'insert',
                         plugins: [
-                          'advlist autolink lists link image charmap print preview anchor',
-                          'searchreplace visualblocks code fullscreen',
-                          'insertdatetime media table paste code help wordcount'
+                          'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount'
                         ],
                         toolbar:
-                          'undo redo | formatselect | bold italic backcolor | \
-                          alignleft aligncenter alignright alignjustify | \
-                          bullist numlist outdent indent | removeformat | help'
+                          'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | media'
                       }}
-                    onEditorChange={ changeWebContent }
+                    //onEditorChange={ changeWebContent }
                 />
                 
-            </Form.Group>
+            
 
         </Form>
         
@@ -142,8 +140,9 @@ function MovieForm({movieAdd}){
         );
 
 }
-
-
+/*<Form.Group controlId="webContent">
+                <Form.Label>Contenu supplémentaire</Form.Label>
+</Form.Group>*/
 /*const getMovieValue = () => {
     return movieValue;
 }*/

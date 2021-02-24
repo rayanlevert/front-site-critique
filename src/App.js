@@ -21,14 +21,20 @@ import ListReview from './components/review/ListReview';
 import ProtectedRoute from './router/ProtectedRoute';
 import ListGameAdmin from './pages/ListGameAdmin';
 import CreateGame from './components/Game/CreateGame';
-import { faGamepad, faHome, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faGamepad, faHome, faUser, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Movies from "./components/movies/Movies";
 import MovieView from "./components/movies/MovieView";
+import ProfilePublic from './components/users/ProfilePublic';
+import { faUber } from '@fortawesome/free-brands-svg-icons';
 
 function App() {
-
+/*
+            <LinkContainer to="/profil">
+              <Nav.Link className="navItem"><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Profil</Nav.Link>
+            </LinkContainer>
+*/
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -45,6 +51,7 @@ function App() {
             <LinkContainer to="/movies">
               <Nav.Link className="navItem"><FontAwesomeIcon icon={faVideo}></FontAwesomeIcon> Films</Nav.Link>
             </LinkContainer>
+
           </Nav>
           <Administration></Administration>
           <LoginOrLogout></LoginOrLogout>
@@ -77,6 +84,7 @@ function App() {
           <Route path="/movie/view/:id">
             <MovieView />
           </Route>
+          <Route path="/profil/:username" component={ProfilePublic}></Route>
           <ProtectedAdminRoute exact path="/admin/users" redirectTo="/home">
             <User></User>
           </ProtectedAdminRoute>

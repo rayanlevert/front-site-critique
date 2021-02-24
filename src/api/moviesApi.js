@@ -4,7 +4,6 @@ import request from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'http://localhost:8080/';
-
 const encode = encodeURIComponent; //encodage des paramètres de la requête (servira au CRUD)
 const responseBody = res => res.body; // retourner la réponse de l'API en json
 const headers = {

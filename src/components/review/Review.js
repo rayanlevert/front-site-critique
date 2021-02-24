@@ -43,7 +43,7 @@ class Review extends Component {
             console.log(reviews);
         } else{
             this.setState(this.state.reviews.length)
-        }
+        }   
         const user = JSON.parse(localStorage.getItem('user'));
         this.setState({user});
         console.log(this.state);

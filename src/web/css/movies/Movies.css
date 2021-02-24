@@ -8,13 +8,28 @@
     text-shadow: 1px 1px black;
     overflow: hidden;
 }
-.card-body.movie-card-body .btn{
+.card-body.movie-card-body #view-movie{
     color: #9e0003;
     background-color: #ededed;
     font-weight: bolder;
     border-color: #9e0003;
 }
-.card-body.movie-card-body .btn:hover{
+.card-body.movie-card-body #view-movie:hover{
     color: #aa1417;
     scale: 1.01;
+}
+
+.card-body.movie-card-body #del-movie{
+    color: #9e0003;
+    background-color: #ededed;
+    font-weight: bolder;
+    border-color: #9e0003;
+}
+.card-body.movie-card-body #del-movie:hover{
+    color: #aa1417;
+    scale: 1.01;
+}
+#admin-create-movie-btn{
+    position : fixed; bottom: 10px; right: 20px;
+    display: block;
 }

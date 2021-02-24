@@ -13,7 +13,7 @@ import agent from "../../api/moviesApi";
 import '../../web/css/movies/Movies.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee,faMinusCircle, fas } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 const mapStateToProps = state => ({
     ...state
@@ -35,25 +35,6 @@ const mapStateToProps = state => ({
   });
 
 
-  const isAdmin = (props) =>{
-    console.log("fonction ISADMIN");
-    try{
-        if(props.userAuth.isLogged === true && props.userAuth.roles !== undefined)
-        {
-          if(props.userAuth.roles[0].name == "ROLE_ADMIN")
-          {
-            console.log('coucou');
-            return(
-            <div className="modalForm">
-              <CreateMovie/>
-              </div> 
-          );
-          }
-        }
-        
-      }
-      finally{} 
-  }
 
   const deleteMovie =(e)=>
       {
@@ -77,6 +58,8 @@ class Movies extends Component
         console.log(props);
         
     }
+
+
 
       //détruira proprement les données du composant afin d'alléger le site et optimiser la navigation - A FAIRE PLUS TARD
       componentWillUnmount() { 
@@ -106,15 +89,56 @@ class Movies extends Component
         }));
       }
 
+
+      isAdmin(){
+        try{
+            if(this.props.userAuth.isLogged === true && this.props.userAuth.roles !== undefined)
+            {
+              if(this.props.userAuth.roles[0].name == "ROLE_ADMIN")
+              {
+                return true;
+              }
+              else{
+                return false;
+              }
+            }
+            
+          }
+          finally{} 
+      }
+      adminCreateForm()
+      {
+        if(this.isAdmin())
+        {
+          return(
+            
+                  <CreateMovie/>
+          );
+        }
+      }
+      adminDeleteForm(id){
+        if(this.isAdmin())
+        {
+          return(
+            <div className="m-3 border-top p-3">
+            <Button className="btn-danger" id="del-movie" data-id={id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
+            </div>
+          );
+        }
+      }
+
       
       render = () => {
           return (<>
-       
-            {isAdmin(this.props)}        
-            
+                  
               <Row className="col-12 justify-content-around">
-               { this.state.movie.map(movie=> 
+               { this.state.movie.map(movie=>
+                 <>
+                <div id="admin-create-movie-btn">
+                {this.adminCreateForm()}  
+                </div>
                <Col className="col-auto m-5">
+                 
                <div className="card movie-card" key={ movie.id }>
                 <img className="card-img-top img-movie" id={"img-"+movie.id} data-lazy={ this.getPoster(movie.title, movie.id) } />
                 <div className="card-body movie-card-body">
@@ -122,14 +146,13 @@ class Movies extends Component
                     <small className="card-subtitle text-muted">{ new Date(movie.publishDate).toLocaleDateString() }</small>
                     <p className="card-text genres">{ movie.genre }</p>
                     <p className="card-deck justify-content-around  text-black-50">A partir de {movie.minAge} ans</p>
-                    <Link className="btn" to={`/movie/view/${movie.id}`} >VOIR LA FICHE</Link>
-                    <div className="m-3 border-top p-3">
-                    <Button className="btn-danger" data-id={movie.id} onClick={deleteMovie}><FontAwesomeIcon icon={faMinusCircle} /></Button>
-                    </div>
+                    <Link id="view-movie" className="btn" to={`/movie/view/${movie.id}`} >VOIR LA FICHE</Link>
+                    
+                    { this.adminDeleteForm(movie.id) }
                 </div>
                 </div>
                </Col>
-                )}
+      </>)}
             </Row>
           </>)
       }

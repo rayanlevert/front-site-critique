@@ -18,3 +18,7 @@
 #age-warning {
     font-size : 16px;
 }
+#admin-update-movie-btn{
+    position : fixed; bottom: 5px; right: 5px;
+    display: block;
+}

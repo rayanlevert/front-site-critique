@@ -18,7 +18,7 @@ export default function LoginOrLogout() {
                 ) : (
                         <>
                             <NavDropdown alignRight title={userAuth.username} id="basic-nav-dropdown">
-                                <NavDropdown.Item href={'/profile/' + userAuth.userId}><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Mon profil</NavDropdown.Item>
+                                <NavDropdown.Item href={'/profil/' + userAuth.username}><FontAwesomeIcon icon={faUser}></FontAwesomeIcon> Mon profil</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/logout"><FontAwesomeIcon icon={faSignOutAlt}></FontAwesomeIcon> Se déconnecter</NavDropdown.Item>
                             </NavDropdown>
