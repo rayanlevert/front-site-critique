@@ -30,6 +30,8 @@ class MovieView extends Component{
         agent.Movies.findOneById(this.props.match.params.id).then(res =>{
         console.log(res);
         this.setState({ movie : res });
+        const user = JSON.parse(localStorage.getItem('user'));
+        this.setState({user});
     });
 
     }
