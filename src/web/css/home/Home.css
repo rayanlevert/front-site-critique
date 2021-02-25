@@ -26,6 +26,8 @@ color: #9e0003;
 }
 .hot-main-title{
     height: fit-content;
+    margin-top: 20px;
+    margin-bottom : 20px;
 }
 
 #home-body{
@@ -33,7 +35,7 @@ color: #9e0003;
 }
 .home-cat-header{
     text-shadow: 1px 1px #ededed;
-
+    font-size: 30px;
 }
 #small-home-main-title{
     font-size: 18px;
@@ -44,24 +46,26 @@ color: #9e0003;
     background-color: #eaeced;
     text-shadow : 1px 1px #efefef;
     color: darkgray;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .movie-card-comedy{
     width: 80%;
     margin: auto;
 }
 
-.card.movie-card-home{
+.movie-card-home{
     width: 12rem;
     height: auto;
     padding: 6px;
 }
-.card{
+.movie-card-home,.movie-card-comedy{
     
     transition-property: background-color, scale, border;
     transition-duration : .3s,.2s;
     transition-timing-function: ease-in-out;
 }
-.card:hover{
+.movie-card-home,.movie-card-comedy:hover{
     background-color: rgba(168, 168, 168, 0.4);
     scale: 1.02;
     border: 2px double#9e0003;
@@ -115,16 +119,18 @@ color: #9e0003;
 #best-games h4{
     text-shadow: 2px 2px #bebdbd;
     margin-top : 30px;
-    font-size: 30px;
     font-weight: bold;
     color: #9e0003;
     background-color: #eaeced;
+    margin-bottom: 30px;
+    font-size: 40px;
+    line-height: 80px;
 }
 #best-games h6{
     background-color: #bebdbd;
-    border-radius: 20px;
-    padding: 10px;
-    font-size: 16px;
+    border-radius: 18px;
+    padding: 12px;
+    font-size: 20px;
     font-weight: bold;
     color: #9e0003;
     text-shadow: 1px 1px black;

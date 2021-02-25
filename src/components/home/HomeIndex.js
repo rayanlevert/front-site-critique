@@ -114,9 +114,9 @@ class HomeIndex extends Component{
             <small className="text-muted inline" id="small-home-main-title">La communauté multimédia sérieuse, fun et surtout totalement gratuite</small>
             </h1>
 
-            <Row className="col-12 d-flex">
+            <Row className="col-12 d-flex mt-5">
             <section id="home-movies" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faFilm} />  Films récemment ajoutés</h4>
+            <h4 className="block col-12 home-cat-header mb-5"><FontAwesomeIcon icon={faFilm} />  Films récemment ajoutés</h4>
 
             {   movies.map(movie =>                 
                 <Col className="col-3 ">
@@ -134,7 +134,7 @@ class HomeIndex extends Component{
             }
             </section>
             <section id="home-games" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faGamepad} />  Jeux vidéos récemment ajoutés</h4>
+            <h4 className="block col-12 mb-5 home-cat-header"><FontAwesomeIcon icon={faGamepad} />  Jeux vidéos récemment ajoutés</h4>
             {   games.map(game =>                 
                 <Col className="col-3 m-1">
                <div className="card movie-card-home" key={ game.id }>
@@ -153,14 +153,14 @@ class HomeIndex extends Component{
             <Row>
             <section className="col-6 row justify-content-center">
                 <h4 className="col-12 hot-main-title"><FontAwesomeIcon icon={faGlassCheers} />  Pour passer un bon moment en famille</h4>
-                <Col className="col-12 m-1">
+                <Col className="col-12">
                 <div className="card movie-card-comedy position-relative" key={ movieComedy.id }>
                 <Row>
-                    <Col className="col-6"> 
+                    <Col className="col-6 p-0"> 
                         <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" /></span>
-                        <img className="card-img-top comedy-img" id={"img-movieComedy-"+movieComedy.id} data-lazy={ this.getPoster(movieComedy.title, movieComedy.id) } />
+                        <img className="comedy-img" id={"img-movieComedy-"+movieComedy.id} data-lazy={ this.getPoster(movieComedy.title, movieComedy.id) } />
                     </Col>
-                    <Col className="col-6">
+                    <Col className="col-6 p-0">
                     <div className="card-body movie-card-body" id="movie-card-body">
                     <h6 className="comedy-title">{movieComedy.title}</h6>
                     <small className="card-subtitle text-muted">{ new Date(movieComedy.publishDate).toLocaleDateString() }</small>
@@ -183,7 +183,7 @@ class HomeIndex extends Component{
                <Row>
                 <Col className="col-6"> 
                 <span className="badge-home-cat"><FontAwesomeIcon icon={faBook} color="darkred" /></span>
-                <img className="card-img-top comedy-img" id={"img-milesGame-"+milesGame.id} src={`../ressources/img/article/game/${milesGame.id}.jpg`} />
+                <img className="comedy-img" id={"img-milesGame-"+milesGame.id} src={`../ressources/img/article/game/${milesGame.id}.jpg`} />
                 </Col>
                 <Col className="col-6">
                     <div className="card-body movie-card-body" id="movie-card-body">
