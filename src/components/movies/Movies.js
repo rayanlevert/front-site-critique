@@ -136,7 +136,7 @@ class Movies extends Component
       }
       adminCreateForm()
       {
-        if(this.isAdmin())
+        if(this.isAdmin)
         {
           return(<>
           <CreateMovie/> 
@@ -156,12 +156,13 @@ class Movies extends Component
       
       render(){
           return (
-              <Row className="col-12 justify-content-around">          
-               { this.state.movies !== null && this.state.movies.map(movie=><>
-                 <div id="admin-create-movie-btn">
-                 {this.adminCreateForm} 
+              <Row className="col-12 justify-content-around"> 
+              <div id="admin-create-movie-btn">
+                 {this.adminCreateForm()} 
                  
-                 </div>
+                 </div>         
+               { this.state.movies !== null && this.state.movies.map(movie=><>
+                 
                 <Col className="col-auto m-5">
                   
                 <div className="card movie-card" key={ movie.id }>
