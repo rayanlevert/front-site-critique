@@ -120,7 +120,7 @@ class ProfilePublic extends Component {
                                         <ListGroup.Item><b>Pseudonyme : </b> {this.state.user.username}</ListGroup.Item>
                                         <ListGroup.Item><b>Âge : </b> {this.state.user.age} ans</ListGroup.Item>
                                         <ListGroup.Item><b>Membre depuis </b> le {this.state.user.registrationDate !== undefined ? moment(this.state.user.registrationDate).format('LL') : ''}</ListGroup.Item>
-                                        <ListGroup.Item><b>Nombre de critique : </b> {this.state.reviews.length}</ListGroup.Item>
+                                        <ListGroup.Item><b>Nombre de critiques : </b> {this.state.reviews.length}</ListGroup.Item>
                                         <ListGroup.Item><h3 className="list-group-item-heading">Description</h3>{this.state.user.description !== '' ?  this.state.user.description : 'Aucune description'}</ListGroup.Item>
                                     </ListGroup>
                                 </Col>

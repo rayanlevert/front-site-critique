@@ -156,7 +156,7 @@ class Movies extends Component
       render(){
           return (
               <Row className="col-12 justify-content-around">          
-               { this.state.movies.map(movie=><>
+               { this.state.movies !== null && this.state.movies.map(movie=><>
                  <div id="admin-create-movie-btn">
                  {/*()=>this.adminCreateForm()*/} 
                  <CreateMovie/> 
