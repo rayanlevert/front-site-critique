@@ -1,11 +1,41 @@
 @font-face { font-family: Mania; src: url(../mania.ttf);}
 
+
+.comedy-title{
+    font-size: 30px;
+    margin-top: 50%;
+    height: fit-content !important;
+    font-weight: bolder;
+text-shadow: 1px 1px black;
+overflow: hidden;
+color: #9e0003;
+}
+.comedy-img{
+    height: 500px;
+}
+.btn-hot{
+    font-size: 25px !important;
+    transition-property: background-color,border;
+    transition-duration: .2s,.1s;
+    transition-timing-function: ease-in;
+}
+.btn-hot:hover{
+    scale : 1!important;
+    background-color : #ff000d32!important;
+    border: 3px inset #9e0003!important;
+}
+.hot-main-title{
+    height: fit-content;
+    margin-top: 20px;
+    margin-bottom : 20px;
+}
+
 #home-body{
     background : linear-gradient(#bebdbd, #ededed);
 }
 .home-cat-header{
     text-shadow: 1px 1px #ededed;
-
+    font-size: 30px;
 }
 #small-home-main-title{
     font-size: 18px;
@@ -16,16 +46,29 @@
     background-color: #eaeced;
     text-shadow : 1px 1px #efefef;
     color: darkgray;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .movie-card-comedy{
-    width: 16rem;
+    width: 80%;
     margin: auto;
 }
 
-.card.movie-card-home{
+.movie-card-home{
     width: 12rem;
     height: auto;
     padding: 6px;
+}
+.movie-card-home,.movie-card-comedy{
+    
+    transition-property: background-color, scale, border;
+    transition-duration : .3s,.2s;
+    transition-timing-function: ease-in-out;
+}
+.movie-card-home,.movie-card-comedy:hover{
+    background-color: rgba(168, 168, 168, 0.4);
+    scale: 1.02;
+    border: 2px double#9e0003;
 }
 .card-body.movie-card-body .card-title-home{
     height: 40px !important;
@@ -49,7 +92,7 @@
 }
 .card-body.movie-card-body #view-movie:hover{
     color: #aa1417;
-    scale: 1.01;
+
 }
 
 .card-body.movie-card-body #del-movie{
@@ -60,7 +103,6 @@
 }
 .card-body.movie-card-body #del-movie:hover{
     color: #aa1417;
-    scale: 1.01;
 }
 #admin-create-movie-btn{
     position : fixed; bottom: 10px; right: 20px;
@@ -69,24 +111,26 @@
 
 .badge-home-cat{
     position: absolute;
-    left: -11px;
-    top: -25px;
-    font-size: 40px;
+    left: 0px;
+    top: -42px;
+    font-size: 50px;
 }
 
 #best-games h4{
     text-shadow: 2px 2px #bebdbd;
     margin-top : 30px;
-    font-size: 30px;
     font-weight: bold;
     color: #9e0003;
     background-color: #eaeced;
+    margin-bottom: 30px;
+    font-size: 40px;
+    line-height: 80px;
 }
 #best-games h6{
     background-color: #bebdbd;
-    border-radius: 20px;
-    padding: 10px;
-    font-size: 16px;
+    border-radius: 18px;
+    padding: 12px;
+    font-size: 20px;
     font-weight: bold;
     color: #9e0003;
     text-shadow: 1px 1px black;

@@ -114,9 +114,9 @@ class HomeIndex extends Component{
             <small className="text-muted inline" id="small-home-main-title">La communauté multimédia sérieuse, fun et surtout totalement gratuite</small>
             </h1>
 
-            <Row className="col-12 d-flex">
+            <Row className="col-12 d-flex mt-5">
             <section id="home-movies" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faFilm} />  Films récemment ajoutés</h4>
+            <h4 className="block col-12 home-cat-header mb-5"><FontAwesomeIcon icon={faFilm} />  Films récemment ajoutés</h4>
 
             {   movies.map(movie =>                 
                 <Col className="col-3 ">
@@ -134,7 +134,7 @@ class HomeIndex extends Component{
             }
             </section>
             <section id="home-games" className="col-6 row justify-content-center">
-            <h4 className="block col-12 home-cat-header"><FontAwesomeIcon icon={faGamepad} />  Jeux vidéos récemment ajoutés</h4>
+            <h4 className="block col-12 mb-5 home-cat-header"><FontAwesomeIcon icon={faGamepad} />  Jeux vidéos récemment ajoutés</h4>
             {   games.map(game =>                 
                 <Col className="col-3 m-1">
                <div className="card movie-card-home" key={ game.id }>
@@ -149,39 +149,53 @@ class HomeIndex extends Component{
                </Col>
                 )
             } 
-            </section>
+            </section></Row>
+            <Row>
             <section className="col-6 row justify-content-center">
-                <h4 className="col-12"><FontAwesomeIcon icon={faGlassCheers} />  Pour passer un bon moment en famille</h4>
-                <Col className="col-6 m-1">
-               <div className="card movie-card-comedy position-relative" key={ movieComedy.id }>
-                   <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" /></span>
-                <img className="card-img-top img-movie-home" id={"img-movieComedy-"+movieComedy.id} data-lazy={ this.getPoster(movieComedy.title, movieComedy.id) } />
-                <div className="card-body movie-card-body" id="movie-card-body">
-                    <h6 className="card-title-home">{movieComedy.title}</h6>
+                <h4 className="col-12 hot-main-title"><FontAwesomeIcon icon={faGlassCheers} />  Pour passer un bon moment en famille</h4>
+                <Col className="col-12">
+                <div className="card movie-card-comedy position-relative" key={ movieComedy.id }>
+                <Row>
+                    <Col className="col-6 p-0"> 
+                        <span className="badge-home-cat"><FontAwesomeIcon icon={faHotjar} color="orange" /></span>
+                        <img className="comedy-img" id={"img-movieComedy-"+movieComedy.id} data-lazy={ this.getPoster(movieComedy.title, movieComedy.id) } />
+                    </Col>
+                    <Col className="col-6 p-0">
+                    <div className="card-body movie-card-body" id="movie-card-body">
+                    <h6 className="comedy-title">{movieComedy.title}</h6>
                     <small className="card-subtitle text-muted">{ new Date(movieComedy.publishDate).toLocaleDateString() }</small>
                     <p className="card-text genres">{ movieComedy.realisator }</p>
-                    <Link id="view-movie" className="btn" to={`/movie/view/${movieComedy.id}`} >VOIR LA FICHE</Link>
-                </div>
+                    <Link id="view-movie" className="btn btn-hot" to={`/movie/view/${movieComedy.id}`} >VOIR LA FICHE</Link>
+                    </div>
+                    </Col>
+                </Row>
+               
+                
                 </div>
                </Col>
             </section>
 
             <section className="col-6 row justify-content-center">
-                <h4 className="col-12"><FontAwesomeIcon icon={faNewspaper} />  Votre avis nous intéresse</h4>
-                <Col className="col-6 m-1">
+                <h4 className="col-12 hot-main-title"><FontAwesomeIcon icon={faNewspaper} />  Votre avis nous intéresse</h4>
+                <Col className="col-12">
                <div className="card movie-card-comedy position-relative" key={ milesGame.id }>
-                   <span className="badge-home-cat"><FontAwesomeIcon icon={faBook} color="darkred" /></span>
-                <img className="card-img-top img-movie-home" id={"img-milesGame-"+milesGame.id} src={`../ressources/img/article/game/${milesGame.id}.jpg`} />
-                <div className="card-body movie-card-body" id="movie-card-body">
-                    <h6 className="card-title-home">{milesGame.title}</h6>
+
+               <Row>
+                <Col className="col-6"> 
+                <span className="badge-home-cat"><FontAwesomeIcon icon={faBook} color="darkred" /></span>
+                <img className="comedy-img" id={"img-milesGame-"+milesGame.id} src={`../ressources/img/article/game/${milesGame.id}.jpg`} />
+                </Col>
+                <Col className="col-6">
+                    <div className="card-body movie-card-body" id="movie-card-body">
+                    <h6 className="comedy-title">{milesGame.title}</h6>
                     <small className="card-subtitle text-muted">{ new Date(milesGame.publishDate).toLocaleDateString() }</small>
-                    <p className="card-text genres">{ milesGame.realisator }</p>
-                    <Button id="view-movie" className="btn" onClick={() => this.createdReview(milesGame.id, milesGame.title)} >Laisser un avis</Button>
+                    <p className="card-text genres">{ milesGame.developer }  { milesGame.platform }</p>
+                    <Button id="view-movie" className="btn btn-hot" onClick={() => this.createdReview(milesGame.id, milesGame.title)} >Laisser un avis</Button>
                 </div>
-                </div>
-               </Col>
-            </section>
-            </Row>
+                 </Col>
+</Row></div></Col></section></Row>
+            
+            
 
             <section id="best-games">
                 <h4>Les jeux les plus populaires en ce moment</h4>

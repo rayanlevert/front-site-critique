@@ -127,7 +127,7 @@ class ProfilePublic extends Component {
                             </Row>
                             <Row className="mt-3">
                                 <Col lg="12">
-                                    <Button onClick={() => this.editGame(this.state.user.id)} variant="outline-dark"><FontAwesomeIcon icon={faEdit} ></FontAwesomeIcon> Editer</Button>
+                                   {(this.state.userAuth.userId ===this.state.user.id ) && (<Button onClick={() => this.editGame(this.state.user.id)} variant="outline-dark"><FontAwesomeIcon icon={faEdit} ></FontAwesomeIcon> Editer</Button>)} 
                                 </Col>
                             </Row>
                         </Card.Body>
