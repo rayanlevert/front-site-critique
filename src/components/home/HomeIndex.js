@@ -150,7 +150,7 @@ class HomeIndex extends Component{
                 )
             } 
             </section></Row>
-            <Row className="ml-0">
+            <Row className="mr-0">
             <section className="col-6 row justify-content-center">
                 <h4 className="col-12 hot-main-title"><FontAwesomeIcon icon={faGlassCheers} />  Pour passer un bon moment en famille</h4>
                 <Col className="col-12">
