@@ -135,7 +135,7 @@ class CreateGame extends Component {
                                         </Form.Group>
                                         <Form.Group controlId="minAge">
                                             <Form.Label>Minimum age</Form.Label>
-                                            <Form.Control type="text" placeholder="Entrez le minimum d'âge " value={this.state.minAge} onChange={this.onChangeGameHandle} required />
+                                            <Form.Control type="text" placeholder="Entrez le minimum d'âge" value={this.state.minAge} onChange={this.onChangeGameHandle} required />
                                         </Form.Group>
                                         <Form.Group controlId="genre">
                                             <Form.Label>Genre</Form.Label>
@@ -145,7 +145,7 @@ class CreateGame extends Component {
                                     <Col lg="6">
                                         <Form.Group controlId="developer">
                                             <Form.Label>Developpeur</Form.Label>
-                                            <Form.Control type="text" placeholder="Entrez le développeur ou les déveoppeurs (entre/)" value={this.state.developer} onChange={this.onChangeGameHandle} required />
+                                            <Form.Control type="text" placeholder="Entrez le développeur ou les développeurs (entre/)" value={this.state.developer} onChange={this.onChangeGameHandle} required />
                                         </Form.Group>
                                         <Form.Group controlId="publisher">
                                             <Form.Label>Producteur</Form.Label>
